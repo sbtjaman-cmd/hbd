@@ -74,7 +74,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
 .stage[data-tr="flip"][data-dir="prev"] .page.leaving{ transform:rotateY(35deg); transform-origin:right center; opacity:0; }
 .stage .page.active{ transform:none !important; opacity:1 !important; }
 
-.bg-pastel{ position:absolute; inset:0; z-index:0; overflow:hidden; }
+.bg-pastel{ position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
 .bg-pastel::before,.bg-pastel::after{ content:''; position:absolute; border-radius:50%; filter:blur(20px); pointer-events:none; }
 .bg-pastel::before{ width:48%; height:48%; top:-10%; left:-12%; animation:bgDriftA 10s ease-in-out infinite; }
 .bg-pastel::after{ width:40%; height:40%; bottom:-9%; right:-10%; animation:bgDriftB 12.5s ease-in-out infinite; }
@@ -91,7 +91,6 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
 .bg-pink-glow::before{ background:var(--mint-300); opacity:.3; }
 .bg-pink-glow::after{ background:var(--peach-200); opacity:.4; }
 
-/* Garden page background — soft meadow blending into the pink theme */
 .bg-pink-garden{
   background:linear-gradient(175deg, #eefbf3 0%, #e8f5e9 18%, #f5fdf6 35%, #fff6fa 58%, #ffe6f1 82%, #ffdcec 100%);
 }
@@ -198,7 +197,14 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
 .wish-title{ font-family:var(--font-script); font-size:clamp(19px,5.6vw,23px); color:var(--pink-700); margin:0; text-align:center; }
 .wish-body{ display:flex; flex-direction:column; gap:13px; }
 .wish-paragraph{ margin:0; font-family:var(--font-body); font-weight:600; font-size:clamp(14px,3.9vw,16px); line-height:1.7; color:var(--ink); text-align:left; }
-.wish-signature{ margin:4px 0 0; align-self:flex-end; font-family:var(--font-script); font-size:clamp(15px,4.2vw,18px); color:var(--pink-600); }
+.wish-signature-wrap{ position:relative; display:inline-block; align-self:flex-end; margin-top:6px; }
+.wish-signature{ font-family:var(--font-script); font-size:clamp(15px,4.2vw,18px); color:var(--pink-600); margin:0; }
+.love-float{
+  position:absolute; top:-14px; right:-18px;
+  font-size:clamp(14px,4vw,17px);
+  animation: loveFloat 2.8s ease-in-out infinite;
+  pointer-events:none;
+}
 .wish-seal-wrap{ position:absolute; z-index:6; left:50%; top:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:8px; opacity:0; }
 .page3.active .wish-seal-wrap{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .5s forwards; }
 .wish-seal-wrap.opened{ pointer-events:none; }
@@ -221,22 +227,23 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
 .page4.active .decor-hint{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .2s forwards; }
 
 /* ===== PAGE 5: blooming garden ===== */
-.garden-canvas{ position:absolute; inset:0; z-index:1; width:100%; height:100%; display:block; touch-action:manipulation; cursor:pointer; }
+.garden-canvas{ position:absolute; inset:0; z-index:1; width:100%; height:100%; display:block; touch-action:manipulation; cursor:pointer; pointer-events:auto; }
 .garden-title{
   position:relative; z-index:2; font-family:var(--font-script); font-size:clamp(16px,4.8vw,20px);
   color:var(--pink-700); margin:0 0 1.4%; opacity:0; pointer-events:none;
 }
-.page5.active .garden-title{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .06s forwards; }
 .garden-hint{
   position:relative; z-index:2; margin:0 0 1.8%; font-weight:700; font-size:clamp(11.5px,3.2vw,12.5px);
   color:var(--pink-700); background:#fff; padding:7px 16px; border-radius:999px;
   box-shadow:0 6px 14px rgba(240,71,156,.22); opacity:0; pointer-events:none;
 }
-.page5.active .garden-hint{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .24s forwards, floatBob 3.4s ease-in-out .8s infinite; }
 .garden-counter{
   position:relative; z-index:2; font-family:var(--font-script); font-size:clamp(12px,3.5vw,14.5px);
   color:var(--pink-600); opacity:0; min-height:1.4em; pointer-events:none;
 }
+
+.page5.active .garden-title{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .06s forwards; }
+.page5.active .garden-hint{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .24s forwards, floatBob 3.4s ease-in-out .8s infinite; }
 .page5.active .garden-counter{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .42s forwards; }
 .garden-special-msg{
   position:absolute; z-index:4; left:50%; top:44%; transform:translate(-50%,-50%);
@@ -371,7 +378,6 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
 @keyframes photoBreathe{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.055); } }
 @keyframes flicker{ 0%,100%{ transform:scaleY(1) scaleX(1); } 50%{ transform:scaleY(1.12) scaleX(.9); } }
 @keyframes smokeRise{ 0%{ opacity:.55; transform:translateY(0) scale(1); } 100%{ opacity:0; transform:translateY(-46px) scale(2.2); } }
-@keyframes kenburns{ 0%{ transform:scale(1) translate(0,0); } 100%{ transform:scale(1.16) translate(-2%,-1%); } }
 @keyframes fadeInUp{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:translateY(0); } }
 @keyframes balloonPop{ 0%{ transform:scale(1) rotate(0deg); opacity:1; } 40%{ transform:scale(1.3) rotate(-10deg); opacity:1; } 100%{ transform:scale(0) rotate(14deg); opacity:0; } }
 @keyframes balloonRespawn{ 0%{ transform:scale(0) rotate(-14deg); opacity:0; } 100%{ transform:scale(1) rotate(0deg); opacity:1; } }
@@ -400,8 +406,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
 @keyframes startBob{ 0%,100%{ transform:translateY(0) rotate(-4deg); } 50%{ transform:translateY(-10px) rotate(4deg); } }
 @keyframes btnPulse{ 0%,100%{ box-shadow:0 10px 22px rgba(240,71,156,.4); } 50%{ box-shadow:0 14px 30px rgba(240,71,156,.6), 0 0 0 7px rgba(255,255,255,.35); } }
 @keyframes gardenMsgPop{ 0%{ transform:translate(-50%,-50%) scale(.4); opacity:0; } 60%{ transform:translate(-50%,-50%) scale(1.12); opacity:1; } 100%{ transform:translate(-50%,-50%) scale(1); opacity:1; } }
-@keyframes butterflyFlutter{ 0%,100%{ transform:translateY(0) rotate(-5deg); } 25%{ transform:translateY(-14px) rotate(6deg); } 50%{ transform:translateY(-4px) rotate(-4deg); } 75%{ transform:translateY(-18px) rotate(3deg); } }
-@keyframes petalFall{ 0%{ transform:translate(0,0) rotate(0deg); opacity:.9; } 100%{ transform:translate(var(--dx),var(--dy)) rotate(var(--dr)); opacity:0; } }
+@keyframes loveFloat{ 0%,100%{ transform:translateY(0) rotate(-5deg) scale(1); } 50%{ transform:translateY(-8px) rotate(5deg) scale(1.18); } }
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
@@ -450,7 +455,10 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
         <div class="wish-letter" id="wishLetter">
           <p class="wish-title" id="wishTitle"></p>
           <div class="wish-body" id="wishBody"></div>
-          <p class="wish-signature" id="wishSignature"></p>
+          <div class="wish-signature-wrap">
+            <p class="wish-signature" id="wishSignature"></p>
+            <span class="love-float" aria-hidden="true">❤️</span>
+          </div>
         </div>
       </div>
       <div class="wish-seal-wrap" id="wishSealWrap">
@@ -482,7 +490,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       <p class="decor-hint content">🎆 tap or drag for fireworks!</p>
     </section>
 
-    <!-- PAGE 5 : BLOOMING GARDEN — tap to plant flowers -->
+    <!-- PAGE 5 : BLOOMING GARDEN — tap to plant flowers, a sun rises -->
     <section class="page page5" data-page="4">
       <div class="bg-pastel bg-pink-garden"></div>
       <canvas class="garden-canvas" id="gardenCanvas"></canvas>
@@ -491,7 +499,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       <p class="garden-counter content" id="gardenCounter"></p>
     </section>
 
-    <!-- PAGE 6 : CONSTELLATION OF REASONS -->
+    <!-- PAGE 6 : CONSTELLATION OF REASONS (5 stars) -->
     <section class="page page6 page-reasons" data-page="5">
       <div class="bg-pastel bg-night"></div>
       <canvas class="page6-canvas" id="reasonsCanvas"></canvas>
@@ -596,7 +604,6 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
 
     music: true,
 
-    // PAGE 1 — Collage photos. 4–8 photos work best.
     collagePhotos: [
       "images/1.jpeg",
       "images/2.jpeg",
@@ -606,10 +613,8 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       "images/6.jpeg"
     ],
 
-    // A flower name tucked into each collage photo — one per photo.
     collageTags: ["My Rose 🌹", "My Lily 🌸", "My Daisy 🌼", "My Tulip 🌷", "My Jasmine 🌿", "My Lotus 🪷"],
 
-    // PAGE 3 — Your birthday wish.
     wish: {
       title: "To My Mayabi",
       text:
@@ -618,18 +623,16 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
         "The hardest part is not being able to see you whenever I want. Sometimes I just wish the distance between us didn't exist, but even from far away, you are always close to my heart.\n\n" +
         "On your birthday, my only wish is that life gives you endless reasons to smile. I hope every new day brings you happiness, peace, good health, and beautiful moments that stay with you forever. I just hope your life is filled with the same happiness and warmth that you bring into my life without even knowing.\n\n" +
         "You truly deserve a life full of love, kindness, and everything that makes your heart happy. Happy Birthday once again, Najiba. Stay happy, stay safe, and keep smiling... because your smile means more to me than you will ever know. ❤️",
-      signature: "— Always, even from far away"
+      signature: "With Love"
     },
 
-    // PAGE 6 — Constellation reasons (tap each star to reveal one).
+    // PAGE 6 — 5 best reasons (one per star)
     reasons: [
       "My heart holds more love for you than words could ever say.",
       "If I had one wish today, it would simply be to see you happy.",
       "I hope life makes you as happy as you make my heart. ❤️",
       "Your mayabi eyes have a peace I could look at forever.",
-      "My heart always feels a little calmer after seeing you.",
-      "You don't even know how much happiness you bring into my life.",
-      "Your happiness has quietly become important to me."
+      "My heart always feels a little calmer after seeing you."
     ]
   };
 
@@ -976,15 +979,13 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     if(sigEl) sigEl.textContent = CONFIG.wish.signature;
   }
 
-  /* ---- page 6: constellation of reasons ---- */
+  /* ---- page 6: constellation of reasons (5 stars) ---- */
   var REASON_POSITIONS = [
-    { top:'7%',  left:'25%' },
-    { top:'3%',  left:'58%' },
-    { top:'36%', left:'82%' },
-    { top:'60%', left:'54%' },
-    { top:'44%', left:'14%' },
-    { top:'68%', left:'78%' },
-    { top:'22%', left:'42%' }
+    { top:'8%',  left:'25%' },
+    { top:'4%',  left:'58%' },
+    { top:'45%', left:'78%' },
+    { top:'68%', left:'40%' },
+    { top:'32%', left:'14%' }
   ];
   function showReason(text){
     var el = document.getElementById('reasonText');
@@ -1083,7 +1084,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     decorCanvas.addEventListener(evt, function(){ decorDragging = false; });
   });
 
-  /* ---- PAGE 5: Blooming Garden ---- */
+  /* ---- PAGE 5: Blooming Garden + Rising Sun ---- */
   var gardenCtx = gardenCanvas.getContext('2d');
   var gardenDpr = Math.max(1, window.devicePixelRatio || 1);
   var gardenW = 0, gardenH = 0;
@@ -1092,6 +1093,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
   var gardenButterflies = [];
   var gardenBloomCount = 0;
   var gardenSpecialTriggered = false;
+  var gardenSunTriggered = false;
   var gardenRunning = false;
   var gardenRafId = null;
   var gardenLastT = null;
@@ -1162,7 +1164,6 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     var swayOffset = Math.sin(flower.swayPhase) * flower.sway * 18;
     ctx.save();
     ctx.translate(flower.x, flower.y);
-    // stem
     var stemEndY = flower.stemLength * progress;
     ctx.strokeStyle = '#8cbf7a';
     ctx.lineWidth = 2.5 * progress;
@@ -1171,7 +1172,6 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     ctx.moveTo(swayOffset * 0.3, 0);
     ctx.quadraticCurveTo(swayOffset * 0.6, -stemEndY * 0.5, swayOffset, -stemEndY);
     ctx.stroke();
-    // small leaves
     if(flower.leaves >= 1 && progress > 0.5){
       var leafProgress = Math.min(1, (progress - 0.5) * 2);
       ctx.fillStyle = '#a8d89a';
@@ -1184,7 +1184,6 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
         ctx.fill();
       }
     }
-    // petals
     ctx.translate(swayOffset, -stemEndY);
     var petalCount = flower.petalCount;
     var petalR = flower.petalSize * progress;
@@ -1198,7 +1197,6 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       ctx.arc(px, py, petalR * 0.48, 0, Math.PI * 2);
       ctx.fill();
     }
-    // center
     ctx.fillStyle = '#ffe88a';
     ctx.beginPath();
     ctx.arc(0, 0, centerR, 0, Math.PI * 2);
@@ -1210,42 +1208,69 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     ctx.restore();
   }
 
-  function drawGardenPetal(ctx, p){
-    ctx.save();
-    ctx.globalAlpha = Math.max(0, p.life);
-    ctx.translate(p.x, p.y);
-    ctx.rotate(p.rot);
-    ctx.fillStyle = p.color;
-    ctx.beginPath();
-    ctx.ellipse(0, 0, p.size * 0.55, p.size * 0.3, 0, 0, 6.2832);
-    ctx.fill();
-    ctx.restore();
-  }
-
   function drawButterfly(ctx, b){
     ctx.save();
     ctx.globalAlpha = 0.75;
     ctx.translate(b.x, b.y);
     var wingFlap = Math.sin(b.wingPhase) * 0.55;
     ctx.fillStyle = b.color;
-    // left wing
     ctx.save();
     ctx.rotate(-0.55 + wingFlap * 0.7);
     ctx.beginPath();
     ctx.ellipse(-b.size * 0.7, 0, b.size, b.size * 0.55, 0, 0, 6.2832);
     ctx.fill();
     ctx.restore();
-    // right wing
     ctx.save();
     ctx.rotate(0.55 - wingFlap * 0.7);
     ctx.beginPath();
     ctx.ellipse(b.size * 0.7, 0, b.size, b.size * 0.55, 0, 0, 6.2832);
     ctx.fill();
     ctx.restore();
-    // body
     ctx.fillStyle = '#5c3d4a';
     ctx.beginPath();
     ctx.ellipse(0, 0, b.size * 0.22, b.size * 0.7, 0, 0, 6.2832);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawSun(ctx, progress){
+    if(progress <= 0) return;
+    var sunX = gardenW * 0.82;
+    var sunBaseY = gardenH * 0.18;
+    var sunY = sunBaseY - progress * 55;
+    var sunRadius = 18 + progress * 12;
+    ctx.save();
+    ctx.globalAlpha = Math.min(1, progress * 1.2);
+    ctx.strokeStyle = '#ffe28a';
+    ctx.lineWidth = 2.5;
+    for(var i=0; i<12; i++){
+      var angle = (i/12)*Math.PI*2 + performance.now()*0.0004;
+      var inner = sunRadius * 0.9;
+      var outer = sunRadius * 1.6;
+      ctx.beginPath();
+      ctx.moveTo(sunX + Math.cos(angle)*inner, sunY + Math.sin(angle)*inner);
+      ctx.lineTo(sunX + Math.cos(angle)*outer, sunY + Math.sin(angle)*outer);
+      ctx.stroke();
+    }
+    ctx.fillStyle = '#fff7cc';
+    ctx.beginPath();
+    ctx.arc(sunX, sunY, sunRadius*1.3, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = '#ffdd55';
+    ctx.beginPath();
+    ctx.arc(sunX, sunY, sunRadius, 0, Math.PI*2);
+    ctx.fill();
+    ctx.strokeStyle = '#d68c2c';
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.arc(sunX, sunY+2, sunRadius*0.35, 0.1, Math.PI-0.1);
+    ctx.stroke();
+    ctx.fillStyle = '#5c3d2e';
+    ctx.beginPath();
+    ctx.arc(sunX - sunRadius*0.28, sunY - sunRadius*0.22, 1.8, 0, Math.PI*2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(sunX + sunRadius*0.28, sunY - sunRadius*0.22, 1.8, 0, Math.PI*2);
     ctx.fill();
     ctx.restore();
   }
@@ -1255,10 +1280,8 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     if(gardenLastT === null) gardenLastT = t;
     var dt = Math.min(0.06, (t - gardenLastT) / 1000);
     gardenLastT = t;
-
     gardenCtx.clearRect(0, 0, gardenW, gardenH);
 
-    // Draw soft ground hint
     var groundY = gardenH * 0.82;
     var groundGrad = gardenCtx.createLinearGradient(0, groundY - 20, 0, gardenH);
     groundGrad.addColorStop(0, 'rgba(162,210,144,0)');
@@ -1267,7 +1290,6 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     gardenCtx.fillStyle = groundGrad;
     gardenCtx.fillRect(0, groundY - 20, gardenW, gardenH - groundY + 20);
 
-    // Draw grass blades
     gardenCtx.strokeStyle = 'rgba(130,185,110,0.35)';
     gardenCtx.lineWidth = 1.2;
     for(var gi = 0; gi < 40; gi++){
@@ -1279,7 +1301,9 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       gardenCtx.stroke();
     }
 
-    // Update and draw butterflies
+    var sunProgress = Math.min(1, Math.max(0, (gardenBloomCount - 5) / 5));
+    drawSun(gardenCtx, sunProgress);
+
     gardenButterflies.forEach(function(b){
       b.wingPhase += b.wingSpeed * dt;
       b.changeTimer -= dt;
@@ -1303,7 +1327,6 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       drawButterfly(gardenCtx, b);
     });
 
-    // Update and draw flowers
     for(var fi = gardenFlowers.length - 1; fi >= 0; fi--){
       var flower = gardenFlowers[fi];
       if(flower.bloomProgress < flower.targetProgress){
@@ -1313,14 +1336,12 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       drawGardenFlower(gardenCtx, flower);
     }
 
-    // Ambient petals
     gardenAmbientPetalTimer += dt;
     if(gardenAmbientPetalTimer > 0.35 && gardenPetals.length < 30){
       gardenAmbientPetalTimer = 0;
       gardenPetals.push(createGardenPetal(rand(0, gardenW), rand(-12, gardenH * 0.5)));
     }
 
-    // Update and draw floating petals
     for(var pi = gardenPetals.length - 1; pi >= 0; pi--){
       var petal = gardenPetals[pi];
       petal.vy += petal.gravity * dt;
@@ -1338,6 +1359,18 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     }
 
     gardenRafId = requestAnimationFrame(gardenLoop);
+  }
+
+  function drawGardenPetal(ctx, p){
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, p.life);
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rot);
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, p.size * 0.55, p.size * 0.3, 0, 0, 6.2832);
+    ctx.fill();
+    ctx.restore();
   }
 
   function startGarden(){
@@ -1358,17 +1391,16 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     gardenPetals = [];
     gardenBloomCount = 0;
     gardenSpecialTriggered = false;
+    gardenSunTriggered = false;
     var counterEl = document.getElementById('gardenCounter');
     if(counterEl) counterEl.textContent = '';
     var hintEl = document.getElementById('gardenHint');
     if(hintEl){ hintEl.style.opacity = ''; hintEl.textContent = '🌱 tap anywhere to plant a flower'; }
-    // Remove any lingering special message
     var existingMsg = document.querySelector('.garden-special-msg');
     if(existingMsg) existingMsg.remove();
   }
 
   function plantFlowerAt(x, y){
-    // Clamp y so flowers don't appear too low
     var maxY = gardenH * 0.78;
     var minY = gardenH * 0.12;
     var clampedY = Math.max(minY, Math.min(maxY, y));
@@ -1376,12 +1408,10 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     gardenFlowers.push(flower);
     gardenBloomCount++;
 
-    // Burst a few petals at the planting spot
     for(var i = 0; i < 8; i++){
       gardenPetals.push(createGardenPetal(x, clampedY, flower.petalColor));
     }
 
-    // Update counter
     var counterEl = document.getElementById('gardenCounter');
     if(counterEl){
       if(gardenBloomCount === 1) counterEl.textContent = '🌷 your first flower bloomed!';
@@ -1390,23 +1420,35 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       else counterEl.textContent = gardenBloomCount + ' flowers — a garden full of love 💐';
     }
 
-    // Special moment at 10 flowers
-    if(gardenBloomCount >= 10 && !gardenSpecialTriggered){
-      gardenSpecialTriggered = true;
-      // Shower of petals
-      for(var j = 0; j < 35; j++){
-        gardenPetals.push(createGardenPetal(rand(gardenW * 0.1, gardenW * 0.9), rand(-30, gardenH * 0.3)));
-      }
+    if(gardenBloomCount >= 5 && !gardenSunTriggered){
+      gardenSunTriggered = true;
       var hintEl = document.getElementById('gardenHint');
-      if(hintEl) hintEl.textContent = '🌸 look how beautiful it is!';
-      // Show a floating message
+      if(hintEl) hintEl.textContent = '☀️ the sun peeks out for you!';
       var page5El = document.querySelector('.page5');
       if(page5El){
         var msg = document.createElement('span');
         msg.className = 'garden-special-msg';
-        msg.textContent = '🌷 you make everything bloom';
+        msg.textContent = '☀️ the sun smiles for you';
         page5El.appendChild(msg);
         setTimeout(function(){ msg.remove(); }, 3200);
+      }
+      playChime();
+    }
+
+    if(gardenBloomCount >= 10 && !gardenSpecialTriggered){
+      gardenSpecialTriggered = true;
+      for(var j = 0; j < 35; j++){
+        gardenPetals.push(createGardenPetal(rand(gardenW * 0.1, gardenW * 0.9), rand(-30, gardenH * 0.3)));
+      }
+      var hintEl2 = document.getElementById('gardenHint');
+      if(hintEl2) hintEl2.textContent = '🌸 look how beautiful it is!';
+      var page5El2 = document.querySelector('.page5');
+      if(page5El2){
+        var msg2 = document.createElement('span');
+        msg2.className = 'garden-special-msg';
+        msg2.textContent = '🌷 you make everything bloom';
+        page5El2.appendChild(msg2);
+        setTimeout(function(){ msg2.remove(); }, 3200);
       }
       playChime();
     }
@@ -1670,9 +1712,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     } else { page3Field.stop(); }
     if(idx===3){ decorField.start(); } else { decorField.stop(); }
     if(idx===4){
-      // Page 5 — Garden
       gardenResize();
-      // Seed butterflies if first time
       if(gardenButterflies.length === 0 && !REDUCED_MOTION){
         for(var b = 0; b < 3; b++) gardenButterflies.push(createButterfly());
       }
@@ -1748,36 +1788,27 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     try{
       if(Tone.context){ try{ Tone.context.lookAhead = 0.12; }catch(e){} }
       var limiter = new Tone.Limiter(-6).toDestination();
-
       var reverb = new Tone.Freeverb({ roomSize:0.55, dampening:3200 });
       reverb.wet.value = 0.22;
       reverb.connect(limiter);
-
       chimeSynth = new Tone.Synth({ oscillator:{type:'sine'}, envelope:{attack:0.005,decay:0.25,sustain:0,release:0.25} }).connect(limiter);
       chimeSynth.volume.value = -14;
-
       var musicSynth = new Tone.PolySynth(Tone.Synth, { oscillator:{type:'triangle'}, envelope:{attack:0.04,decay:0.2,sustain:0.25,release:0.7} });
       musicSynth.volume.value = -24;
       musicSynth.connect(reverb);
-
       var padSynth = new Tone.PolySynth(Tone.Synth, { oscillator:{type:'sine'}, envelope:{attack:0.6,decay:0.3,sustain:0.5,release:1.4} });
       padSynth.volume.value = -29;
       padSynth.connect(reverb);
-
       var shaker = new Tone.NoiseSynth({ noise:{type:'white'}, envelope:{attack:0.001,decay:0.05,sustain:0} });
       shaker.volume.value = -36;
       shaker.connect(limiter);
-
       var melody = ['C5','E5','G5','E5','A4','C5','E5','C5','F4','A4','C5','A4','G4','B4','D5','B4'];
       var step = 0;
       new Tone.Loop(function(time){ musicSynth.triggerAttackRelease(melody[step % melody.length], '8n', time); step++; }, '4n').start(0);
-
       var chords = [['C4','E4','G4'],['A3','C4','E4'],['F3','A3','C4'],['G3','B3','D4']];
       var cstep = 0;
       new Tone.Loop(function(time){ padSynth.triggerAttackRelease(chords[cstep % chords.length], '2n', time); cstep++; }, '1n').start(0);
-
       new Tone.Loop(function(time){ shaker.triggerAttackRelease('16n', time); }, '8n').start('8n');
-
       Tone.Transport.bpm.value = 92;
     }catch(e){ console.warn('audio init failed', e); }
   }
