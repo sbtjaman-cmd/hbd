@@ -222,87 +222,91 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
 .decor-hint{ position:relative; z-index:2; margin-top:0; margin-bottom:auto; font-weight:700; font-size:clamp(12px,3.4vw,13px); color:var(--pink-700); background:#fff; padding:8px 16px; border-radius:999px; box-shadow:0 6px 14px rgba(240,71,156,.25); pointer-events:none; opacity:0; }
 .page4.active .decor-hint{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .2s forwards; }
 
-/* ===== PAGE 5: message in a bottle ===== */
-.bg-ocean{
-  background:linear-gradient(180deg,var(--sea-100) 0%,#dcf1ff 20%,#c3e8fa 38%,var(--sea-300) 55%,#82cfe3 72%,var(--sea-500) 100%);
-}
-.bg-ocean::before{ background:#ffffff; opacity:.45; }
-.bg-ocean::after{ background:var(--mint-300); opacity:.3; }
+/* ===== PAGE 5: a dream time with you (moonlit pond) ===== */
+.bg-moonlit{ background:linear-gradient(165deg, #1e2448 0%, #2b3564 22%, #4b3f74 48%, var(--pink-600) 78%, var(--pink-400) 100%); }
+.bg-moonlit::before{ background:#fff8e4; opacity:.16; }
+.bg-moonlit::after{ background:var(--pink-300); opacity:.22; }
 
-.bottle-title{
-  position:relative; z-index:2; font-family:var(--font-script); font-size:clamp(16px,4.8vw,20px);
-  color:var(--sea-700); margin:0 0 1.4%; opacity:0; pointer-events:none;
-}
-.bottle-hint{
+.dream-hint{
   position:relative; z-index:2; margin:0 0 1.8%; font-weight:700; font-size:clamp(11.5px,3.2vw,12.5px);
-  color:var(--sea-700); background:rgba(255,255,255,.92); padding:7px 16px; border-radius:999px;
-  box-shadow:0 6px 14px rgba(31,91,110,.22); opacity:0; pointer-events:none;
+  color:var(--pink-700); background:rgba(255,255,255,.92); padding:7px 16px; border-radius:999px;
+  box-shadow:0 6px 14px rgba(15,18,40,.3); opacity:0;
 }
-.page5.active .bottle-title{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .06s forwards; }
-.page5.active .bottle-hint{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .24s forwards, floatBob 3.4s ease-in-out .8s infinite; }
+.page5.active .dream-hint{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .15s forwards, floatBob 3.4s ease-in-out .8s infinite; }
 
-.bottle-stage{ position:relative; width:100%; flex:1; min-height:0; touch-action:none; }
-.page5-canvas{ position:absolute; inset:0; z-index:2; pointer-events:none; }
+.dream-stage{ position:relative; width:100%; flex:1; min-height:0; }
+.page5-canvas{ position:absolute; inset:0; z-index:3; pointer-events:none; }
 
-.ocean-scene{ position:absolute; inset:0; z-index:1; overflow:hidden; pointer-events:none; border-radius:18px; }
-.ocean-cloud{ position:absolute; font-size:clamp(20px,6vw,30px); opacity:.8; filter:drop-shadow(0 4px 6px rgba(255,255,255,.5)); animation:cloudSway ease-in-out infinite; }
-.cloud-a{ top:9%; left:14%; animation-duration:7s; }
-.cloud-b{ top:16%; left:62%; font-size:clamp(15px,4.4vw,21px); opacity:.65; animation-duration:9s; animation-delay:-3s; }
+.moon-btn{ position:absolute; top:2%; left:50%; width:clamp(58px,21vw,96px); transform:translate(-50%,0); border:none; background:none; padding:0; cursor:pointer; z-index:2; transition:transform .15s ease; }
+.moon-btn::before{
+  content:''; position:absolute; z-index:-1; top:50%; left:50%; width:220%; aspect-ratio:1/1;
+  transform:translate(-50%,-50%); border-radius:50%;
+  background:radial-gradient(circle, rgba(255,248,220,.55) 0%, rgba(255,248,220,0) 68%);
+}
+.page5.active .moon-btn::before{ animation:glowPulse 3.6s ease-in-out infinite; }
+.moon-btn:active{ transform:translate(-50%,0) scale(.94); }
+.moon-svg{ width:100%; height:auto; display:block; filter:drop-shadow(0 0 10px rgba(255,248,220,.5)); }
 
-.wave-layer{ position:absolute; left:0; bottom:0; width:200%; height:34%; display:block; }
-.wave-back{ bottom:11%; height:30%; opacity:.6; animation:waveDrift 18s linear infinite; }
-.wave-front{ bottom:0; height:38%; opacity:.92; animation:waveDrift 11s linear infinite reverse; }
+.dream-star{ position:absolute; z-index:2; color:#fff8e4; font-size:clamp(10px,3vw,13px); pointer-events:none; opacity:.9; }
+.ds-a{ top:9%; left:23%; }
+.ds-b{ top:15%; right:19%; }
+.page5.active .ds-a{ animation:sprinkleTwinkle 2.4s ease-in-out .3s infinite; }
+.page5.active .ds-b{ animation:sprinkleTwinkle 2.4s ease-in-out 1s infinite; }
 
-.bottle-wrap{ position:absolute; left:50%; top:50%; z-index:3; width:24%; max-width:96px; will-change:transform; }
-.bottle-btn{ display:block; width:100%; border:none; background:none; padding:0; cursor:pointer; position:relative; z-index:1; }
-.page5.active .bottle-btn{ animation:bottleGlow 3.6s ease-in-out infinite; }
-.bottle-svg{ width:100%; height:auto; display:block; }
-.bottle-cork{
-  position:absolute; left:50%; top:8%; z-index:2; width:32%; height:16%;
-  background:linear-gradient(180deg,#dba066,#a97440); border-radius:7px 7px 3px 3px;
-  box-shadow:0 2px 5px rgba(90,60,20,.35); transform:translateX(-50%);
-  transition:transform .45s cubic-bezier(.34,1.56,.64,1), opacity .35s ease;
-  pointer-events:none;
+.shooting-star{
+  position:absolute; width:60px; height:2.5px; z-index:2; pointer-events:none; border-radius:2px;
+  background:linear-gradient(90deg, rgba(255,248,220,0), #fff8e4 70%, #fffef5);
+  filter:drop-shadow(0 0 6px rgba(255,248,220,.85));
+  animation:shootAcross 1.15s ease-in forwards;
 }
-.bottle-scroll-peek{
-  position:absolute; left:50%; top:58%; z-index:1; font-size:clamp(13px,3.6vw,17px);
-  transform:translate(-50%,-50%) rotate(-6deg); opacity:.92;
-  transition:transform .5s cubic-bezier(.34,1.56,.64,1) .05s, opacity .4s ease .05s;
-  pointer-events:none;
-}
-#bottleWrap.open .bottle-cork{ transform:translateX(-50%) translateY(-42px) rotate(-24deg); opacity:0; }
-#bottleWrap.open .bottle-scroll-peek{ transform:translate(-50%,-190%) rotate(4deg) scale(1.2); opacity:0; }
 
-.scroll-overlay{
-  position:absolute; inset:0; z-index:9; display:flex; align-items:center; justify-content:center;
-  padding:9%; background:rgba(90,165,185,.32); opacity:0; pointer-events:none; transition:opacity .35s ease;
+.dream-pond{ position:absolute; left:0; right:0; bottom:0; height:44%; z-index:1; }
+.pond-water{ position:absolute; inset:0; width:100%; height:100%; display:block; border:none; background:none; padding:0; cursor:pointer; overflow:hidden; }
+.pond-svg{ width:100%; height:100%; display:block; }
+
+.pond-reeds{ position:absolute; bottom:0; width:16%; max-width:60px; height:60%; pointer-events:none; z-index:2; }
+.reeds-left{ left:2%; transform-origin:bottom center; }
+.reeds-right{ right:2%; transform-origin:bottom center; }
+.page5.active .reeds-left{ animation:reedSwayL 4.5s ease-in-out infinite; }
+.page5.active .reeds-right{ animation:reedSwayR 5.2s ease-in-out .4s infinite; }
+
+.couple-btn{ position:absolute; left:50%; bottom:36%; width:54%; max-width:185px; transform:translate(-50%,0); border:none; background:none; padding:0; cursor:pointer; z-index:2; transform-origin:bottom center; }
+.couple-btn:active{ transform:translate(-50%,0) scale(.97); }
+.couple-svg{ width:100%; height:auto; display:block; filter:drop-shadow(0 8px 14px rgba(10,14,30,.35)); }
+.couple-btn.leaning{ animation:coupleLean .9s cubic-bezier(.34,1.56,.64,1); }
+
+.dream-caption{
+  font-family:var(--font-script); font-size:clamp(16px,4.6vw,20px); color:#fff8ec;
+  text-shadow:0 3px 14px rgba(10,14,30,.4), 0 0 18px rgba(255,214,235,.35); margin:3% 0 0; opacity:0;
 }
-.scroll-overlay.show{ opacity:1; pointer-events:auto; }
-.scroll-wrap{
-  position:relative; width:100%; max-width:280px; display:flex; flex-direction:column; align-items:stretch;
-  transform:scaleY(.08); transform-origin:top center; opacity:0;
-  transition:transform .6s cubic-bezier(.34,1.2,.4,1), opacity .3s ease;
+.page5.active .dream-caption{ animation:popIn .6s cubic-bezier(.34,1.56,.64,1) .3s forwards, headlineGlow 3s ease-in-out 1.3s infinite; }
+
+.song-player{ display:flex; flex-direction:column; align-items:center; gap:6px; margin-top:3%; opacity:0; }
+.page5.active .song-player{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .5s forwards; }
+.song-row{ display:flex; align-items:center; gap:10px; }
+.song-btn{
+  width:clamp(46px,13vw,54px); height:clamp(46px,13vw,54px); border-radius:50%; border:none; cursor:pointer;
+  background:linear-gradient(160deg,#fff,var(--pink-100)); color:var(--pink-600);
+  box-shadow:0 8px 18px rgba(15,18,40,.3), inset 0 0 0 2px rgba(255,255,255,.85);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .15s ease, background .3s ease, color .3s ease;
 }
-.scroll-wrap.unrolled{ transform:scaleY(1); opacity:1; }
-.scroll-cap{ height:14px; border-radius:8px; background:linear-gradient(180deg,#e3b57a,#b9814a); box-shadow:0 3px 6px rgba(90,60,20,.3); flex-shrink:0; position:relative; z-index:2; }
-.scroll-cap::before,.scroll-cap::after{ content:''; position:absolute; top:50%; width:9px; height:9px; border-radius:50%; background:#a5713e; transform:translateY(-50%); }
-.scroll-cap::before{ left:-4px; }
-.scroll-cap::after{ right:-4px; }
-.scroll-paper{
-  background:linear-gradient(175deg,#fffaf0,#fff2d9 60%,#fdecc8);
-  padding:9% 8%; max-height:52vh; overflow-y:auto; -webkit-overflow-scrolling:touch;
-  box-shadow:inset 0 0 0 1px rgba(210,170,110,.4);
-}
-.scroll-note{
-  margin:0; font-family:var(--font-script); font-size:clamp(14px,4vw,17px); line-height:2; color:#6b4a2c; text-align:center;
-  filter:blur(7px); opacity:0; transition:filter .8s ease .25s, opacity .8s ease .25s;
-  white-space:pre-line;
-}
-.scroll-wrap.unrolled .scroll-note{ filter:blur(0); opacity:1; }
-.scroll-close{
-  position:absolute; top:-14px; right:-8px; z-index:3; width:30px; height:30px; border-radius:50%; border:none;
-  background:#fff; color:var(--pink-600); font-weight:700; font-size:13px; box-shadow:0 4px 10px rgba(0,0,0,.22); cursor:pointer;
-}
+.page5.active .song-btn{ animation:songBtnPulse 2.6s ease-in-out infinite; }
+.page5.active .song-btn.playing{ animation:none; }
+.song-btn:active{ transform:scale(.9); }
+.song-btn.playing{ background:linear-gradient(160deg,var(--pink-400),var(--pink-600)); color:#fff; }
+.song-btn .icon-pause{ display:none; }
+.song-btn.playing .icon-play{ display:none; }
+.song-btn.playing .icon-pause{ display:block; }
+.song-bars{ display:flex; align-items:flex-end; gap:3px; height:20px; opacity:0; transition:opacity .3s ease; }
+.song-bars.show{ opacity:1; }
+.song-bars i{ width:4px; border-radius:2px; background:#fff8ec; display:block; box-shadow:0 0 6px rgba(255,248,236,.7); animation:songBarBeat .9s ease-in-out infinite; }
+.song-bars i:nth-child(1){ height:7px; animation-delay:0s; }
+.song-bars i:nth-child(2){ height:15px; animation-delay:.15s; }
+.song-bars i:nth-child(3){ height:10px; animation-delay:.3s; }
+.song-bars i:nth-child(4){ height:17px; animation-delay:.45s; }
+.song-hint{ margin:0; font-size:10px; font-weight:700; color:var(--pink-700); background:#fff; padding:4px 11px; border-radius:999px; opacity:0; max-width:78vw; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,.16); transition:opacity .3s ease; }
+.song-hint.show{ opacity:.95; }
 
 /* ===== PAGE 6: constellation of reasons ===== */
 .bg-night{ background:radial-gradient(140% 120% at 50% 10%, rgba(0,0,0,0) 0%, rgba(30,10,20,.4) 100%), radial-gradient(120% 120% at 50% 25%, var(--pink-400) 0%, var(--pink-600) 55%, var(--pink-700) 100%); }
@@ -484,9 +488,17 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
 @keyframes startGradient{ 0%,100%{ background-position:0% 30%; } 50%{ background-position:100% 70%; } }
 @keyframes startBob{ 0%,100%{ transform:translateY(0) rotate(-4deg); } 50%{ transform:translateY(-10px) rotate(4deg); } }
 @keyframes btnPulse{ 0%,100%{ box-shadow:0 10px 22px rgba(240,71,156,.4); } 50%{ box-shadow:0 14px 30px rgba(240,71,156,.6), 0 0 0 7px rgba(255,255,255,.35); } }
-@keyframes cloudSway{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(12px,-5px); } }
-@keyframes waveDrift{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
-@keyframes bottleGlow{ 0%,100%{ filter:drop-shadow(0 10px 16px rgba(30,90,110,.35)); } 50%{ filter:drop-shadow(0 12px 22px rgba(30,90,110,.5)); } }
+@keyframes reedSwayL{ 0%,100%{ transform:rotate(-2deg); } 50%{ transform:rotate(2deg); } }
+@keyframes reedSwayR{ 0%,100%{ transform:scaleX(-1) rotate(-2deg); } 50%{ transform:scaleX(-1) rotate(2deg); } }
+@keyframes coupleLean{ 0%{ transform:translate(-50%,0) scale(1); } 40%{ transform:translate(-50%,-3px) scale(1.045); } 100%{ transform:translate(-50%,0) scale(1); } }
+@keyframes shootAcross{
+  0%{ transform:translate(0,0) rotate(24deg) scaleX(.3); opacity:0; }
+  15%{ transform:translate(26px,14px) rotate(24deg) scaleX(1); opacity:1; }
+  78%{ opacity:.9; }
+  100%{ transform:translate(210px,110px) rotate(24deg) scaleX(1); opacity:0; }
+}
+@keyframes songBarBeat{ 0%,100%{ transform:scaleY(.35); } 50%{ transform:scaleY(1); } }
+@keyframes songBtnPulse{ 0%,100%{ box-shadow:0 8px 18px rgba(15,18,40,.3), inset 0 0 0 2px rgba(255,255,255,.85); } 50%{ box-shadow:0 10px 24px rgba(15,18,40,.42), inset 0 0 0 2px rgba(255,255,255,.95); } }
 @keyframes loveFloat{ 0%,100%{ transform:translateY(0) rotate(-5deg) scale(1); } 50%{ transform:translateY(-8px) rotate(5deg) scale(1.18); } }
 
 @media (prefers-reduced-motion:reduce){
@@ -571,48 +583,91 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       <p class="decor-hint content">🎆 tap or drag for fireworks!</p>
     </section>
 
-    <!-- PAGE 5 : MESSAGE IN A BOTTLE — tilt or drag to drift the bottle, tap to open the note -->
+    <!-- PAGE 5 : A DREAM TIME WITH YOU — tap the moon, the water, or the two of you; play your song -->
     <section class="page page5" data-page="4">
-      <div class="bg-pastel bg-ocean"></div>
-      <p class="bottle-title content">a message in a bottle 🌊</p>
-      <p class="bottle-hint content" id="bottleHint">tilt or drag to drift the bottle — tap it to open</p>
+      <div class="bg-pastel bg-moonlit"></div>
+      <p class="dream-hint content" id="dreamHint">🌙 tap the moon, the water, or us ✨</p>
 
-      <div class="bottle-stage content" id="bottleStage">
+      <div class="dream-stage content" id="dreamStage">
         <canvas class="page5-canvas" id="page5Canvas"></canvas>
-        <div class="ocean-scene" id="oceanScene" aria-hidden="true">
-          <span class="ocean-cloud cloud-a">☁️</span>
-          <span class="ocean-cloud cloud-b">☁️</span>
-          <svg class="wave-layer wave-back" viewBox="0 0 800 150" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0,55 Q25,38 50,55 T100,55 T150,55 T200,55 T250,55 T300,55 T350,55 T400,55 T450,55 T500,55 T550,55 T600,55 T650,55 T700,55 T750,55 T800,55 L800,150 L0,150 Z" fill="var(--sea-300)"/>
+
+        <button type="button" class="moon-btn" id="moonBtn" aria-label="Tap the moon to send a shooting star">
+          <svg class="moon-svg" viewBox="0 0 100 100" aria-hidden="true">
+            <circle cx="50" cy="50" r="40" fill="#fff8e4"/>
+            <circle cx="34" cy="36" r="7" fill="#f2e3bd" opacity=".5"/>
+            <circle cx="61" cy="28" r="4.5" fill="#f2e3bd" opacity=".4"/>
+            <circle cx="64" cy="58" r="8.5" fill="#f2e3bd" opacity=".45"/>
+            <circle cx="37" cy="65" r="5" fill="#f2e3bd" opacity=".35"/>
           </svg>
-          <svg class="wave-layer wave-front" viewBox="0 0 800 150" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0,80 Q25,58 50,80 T100,80 T150,80 T200,80 T250,80 T300,80 T350,80 T400,80 T450,80 T500,80 T550,80 T600,80 T650,80 T700,80 T750,80 T800,80 L800,150 L0,150 Z" fill="var(--sea-500)" opacity=".9"/>
+        </button>
+        <span class="dream-star ds-a" aria-hidden="true">✦</span>
+        <span class="dream-star ds-b" aria-hidden="true">✦</span>
+
+        <div class="dream-pond" id="dreamPond">
+          <button type="button" class="pond-water" id="pondWater" aria-label="Tap the water to make ripples">
+            <svg class="pond-svg" viewBox="0 0 400 150" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="dreamPondGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#3a4472"/>
+                  <stop offset="45%" stop-color="#2a3560"/>
+                  <stop offset="100%" stop-color="#1c2648"/>
+                </linearGradient>
+                <linearGradient id="dreamReflGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#fff8e4" stop-opacity=".8"/>
+                  <stop offset="100%" stop-color="#fff8e4" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0,20 Q100,4 200,18 T400,16 L400,150 L0,150 Z" fill="url(#dreamPondGrad)"/>
+              <rect x="172" y="18" width="56" height="96" fill="url(#dreamReflGrad)" opacity=".6"/>
+              <path d="M168,42 Q200,37 232,42" stroke="#fff8e4" stroke-width="2" fill="none" opacity=".3"/>
+              <path d="M163,66 Q200,59 237,66" stroke="#fff8e4" stroke-width="2" fill="none" opacity=".24"/>
+              <path d="M170,90 Q200,83 230,90" stroke="#fff8e4" stroke-width="1.6" fill="none" opacity=".2"/>
+            </svg>
+          </button>
+
+          <svg class="pond-reeds reeds-left" viewBox="0 0 60 90" aria-hidden="true">
+            <path d="M8,90 C6,64 14,38 10,12" stroke="#1c2648" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M20,90 C16,68 24,46 18,20" stroke="#233058" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M32,90 C30,72 36,50 30,26" stroke="#1c2648" stroke-width="3.4" fill="none" stroke-linecap="round"/>
           </svg>
-        </div>
-        <div class="bottle-wrap" id="bottleWrap">
-          <div class="bottle-cork" aria-hidden="true"></div>
-          <span class="bottle-scroll-peek" aria-hidden="true">📜</span>
-          <button type="button" class="bottle-btn" id="bottleBtn" aria-label="Tap to open the bottle and read the letter inside">
-            <svg viewBox="0 0 100 150" class="bottle-svg" aria-hidden="true">
-              <path d="M40,36 C31,44 27,57 27,72 L27,124 C27,134 34,141 44,143 C48,144 52,144 56,143 C66,141 73,134 73,124 L73,72 C73,57 69,44 60,36 Z"
-                    fill="rgba(175,225,215,.45)" stroke="rgba(105,182,172,.9)" stroke-width="2.5"/>
-              <path d="M38,44 C33,52 31,60 31,72 L31,116" stroke="rgba(255,255,255,.6)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-              <rect x="40" y="18" width="20" height="20" fill="rgba(150,205,195,.4)" stroke="rgba(105,182,172,.7)" stroke-width="2"/>
+          <svg class="pond-reeds reeds-right" viewBox="0 0 60 90" aria-hidden="true">
+            <path d="M52,90 C54,64 46,38 50,12" stroke="#1c2648" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M40,90 C44,68 36,46 42,20" stroke="#233058" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M28,90 C30,72 24,50 30,26" stroke="#1c2648" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+          </svg>
+
+          <button type="button" class="couple-btn" id="coupleBtn" aria-label="Tap the two of you">
+            <svg class="couple-svg" viewBox="0 0 200 70" aria-hidden="true">
+              <path d="M0,70 Q40,42 100,47 T200,70 Z" fill="#1c2648"/>
+              <g fill="#28325c">
+                <ellipse cx="78" cy="46" rx="17" ry="11"/>
+                <ellipse cx="74" cy="28" rx="13" ry="16" transform="rotate(-6 74 28)"/>
+                <circle cx="72" cy="10" r="8.5"/>
+                <ellipse cx="100" cy="22" rx="16" ry="6" transform="rotate(-3 100 22)"/>
+                <ellipse cx="122" cy="45" rx="16" ry="10.5"/>
+                <ellipse cx="118" cy="27" rx="12.5" ry="15.5" transform="rotate(7 118 27)"/>
+                <circle cx="120" cy="9" r="8"/>
+              </g>
+              <path d="M65,4 Q72,-1 80,3" stroke="rgba(255,244,214,.5)" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M113,3 Q120,-1 128,2" stroke="rgba(255,244,214,.5)" stroke-width="2" fill="none" stroke-linecap="round"/>
             </svg>
           </button>
         </div>
       </div>
 
-      <div class="scroll-overlay" id="scrollOverlay">
-        <div class="scroll-wrap" id="scrollWrap">
-          <div class="scroll-cap scroll-cap-top"></div>
-          <div class="scroll-paper">
-            <p class="scroll-note" id="scrollNote"></p>
-          </div>
-          <div class="scroll-cap scroll-cap-bottom"></div>
-          <button type="button" class="scroll-close" id="scrollCloseBtn" aria-label="Roll the scroll back up">✕</button>
+      <p class="dream-caption content" id="dreamCaption">A dream time with you</p>
+
+      <div class="song-player content" id="songPlayer">
+        <div class="song-row">
+          <button type="button" class="song-btn" id="songBtn" aria-label="Play our song">
+            <svg class="icon-play" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M7 4 L20 12 L7 20 Z" fill="currentColor"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><rect x="6" y="4" width="4.4" height="16" rx="1.4" fill="currentColor"/><rect x="13.6" y="4" width="4.4" height="16" rx="1.4" fill="currentColor"/></svg>
+          </button>
+          <span class="song-bars" id="songBars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         </div>
+        <p class="song-hint" id="songHint"></p>
       </div>
+      <audio id="dreamAudio" preload="none" loop></audio>
     </section>
 
     <!-- PAGE 6 : CONSTELLATION OF REASONS (5 stars) -->
@@ -741,9 +796,9 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       signature: "With Love"
     },
 
-    // PAGE 5 — the note tucked inside the bottle's scroll
-    bottleNote:
-      "If this little bottle ever drifted all the way to you... I hope it carried every wish I've sent across the distance between us — for your smile, your peace, and days as soft and gentle as you are. Wherever you are, however far, some part of me is always floating your way. Happy Birthday, my Mayabi. 🌊❤️",
+    // PAGE 5 — the moonlit pond scene: caption text + your song file
+    dreamCaption: "A dream time with you",
+    songSrc: "audio/our-song.mp3", // put your downloaded song here — create an "audio" folder next to "images" and match this filename (or change the path)
 
     // PAGE 6 — 5 best reasons (one per star)
     reasons: [
@@ -848,6 +903,18 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       ctx.beginPath(); ctx.arc(0,0,p.size/2,0,6.2832); ctx.stroke();
       ctx.fillStyle = 'rgba(255,255,255,.3)';
       ctx.beginPath(); ctx.arc(-p.size*0.16,-p.size*0.16,p.size*0.15,0,6.2832); ctx.fill();
+    } else if(p.kind === 'firefly'){
+      var flicker = 0.35 + 0.65*Math.max(0, Math.sin(p.twinklePhase||0));
+      ctx.globalAlpha *= flicker;
+      ctx.fillStyle = 'rgba(255,241,168,.5)';
+      ctx.beginPath(); ctx.arc(0,0,p.size*1.7,0,6.2832); ctx.fill();
+      ctx.fillStyle = '#fff8d6';
+      ctx.beginPath(); ctx.arc(0,0,p.size*0.42,0,6.2832); ctx.fill();
+    } else if(p.kind === 'ripple'){
+      var prog = 1 - Math.max(0, Math.min(1,p.life));
+      ctx.strokeStyle = p.color;
+      ctx.lineWidth = Math.max(1, p.size*0.05);
+      ctx.beginPath(); ctx.arc(0,0, p.size*prog, 0, 6.2832); ctx.stroke();
     }
     ctx.restore();
   }
@@ -867,7 +934,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     }
     resize();
 
-    function spawnAmbient(kind){
+    function spawnAmbient(kind, yRange){
       var p = { kind:kind, color:pick(COLORS), rot:rand(0,6.28), rotSpeed:rand(-2,2),
         wobble:rand(6,16), wobbleSpeed:rand(0.8,2.2), wobblePhase:rand(0,6.28), life:1, decay:0, fade:fadeMul };
       if(kind==='confetti'){
@@ -875,22 +942,25 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       } else if(kind==='heart'){
         p.size=rand(10,17); p.x=rand(0,W); p.y=H+rand(0,H*0.3); p.vx=rand(-6,6); p.vy=-rand(16,26); p.gravity=-rand(1,4); p.drag=0.2;
       } else if(kind==='star'){
-        p.size=rand(6,11); p.x=rand(0,W); p.y=rand(0,H); p.vx=0; p.vy=0; p.gravity=0; p.drag=0; p.twinklePhase=rand(0,6.28); p.twinkleSpeed=rand(1.2,2.4);
+        p.size=rand(6,11); p.x=rand(0,W); p.y = yRange ? rand(H*yRange[0],H*yRange[1]) : rand(0,H); p.vx=0; p.vy=0; p.gravity=0; p.drag=0; p.twinklePhase=rand(0,6.28); p.twinkleSpeed=rand(1.2,2.4);
       } else if(kind==='ribbon'){
         p.size=rand(20,32); p.x=rand(0,W); p.y=rand(-H*0.3,H*0.5); p.vx=rand(-4,4); p.vy=rand(6,14); p.gravity=rand(2,6); p.drag=0.3;
       } else if(kind==='petal'){
         p.size=rand(9,15); p.x=rand(0,W); p.y=rand(-H*0.3,0); p.vx=rand(-5,5); p.vy=rand(10,20); p.gravity=rand(3,7); p.drag=0.25;
       } else if(kind==='bubble'){
         p.size=rand(5,12); p.x=rand(0,W); p.y=H+rand(0,H*0.4); p.vx=rand(-6,6); p.vy=-rand(14,28); p.gravity=-rand(2,6); p.drag=0.22;
+      } else if(kind==='firefly'){
+        var fMin = yRange ? H*yRange[0] : H*0.35, fMax = yRange ? H*yRange[1] : H*0.9;
+        p.size=rand(3,5.5); p.x=rand(0,W); p.y=rand(fMin,fMax); p.vx=rand(-6,6); p.vy=rand(-7,7); p.gravity=0; p.drag=0.15; p.twinklePhase=rand(0,6.28); p.twinkleSpeed=rand(1.4,2.6);
       }
       return p;
     }
-    function seedAmbient(kinds, countEach){
+    function seedAmbient(kinds, countEach, yRange){
       particles = [];
-      kinds.forEach(function(k){ for(var i=0;i<countEach;i++) particles.push(spawnAmbient(k)); });
+      kinds.forEach(function(k){ for(var i=0;i<countEach;i++) particles.push(spawnAmbient(k, yRange)); });
     }
-    function addAmbient(kinds, countEach){
-      kinds.forEach(function(k){ for(var i=0;i<countEach;i++) particles.push(spawnAmbient(k)); });
+    function addAmbient(kinds, countEach, yRange){
+      kinds.forEach(function(k){ for(var i=0;i<countEach;i++) particles.push(spawnAmbient(k, yRange)); });
     }
     function burst(x,y,count){
       for(var i=0;i<count;i++){
@@ -949,6 +1019,13 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
         });
       }
     }
+    function ripple(x,y,maxR,color){
+      particles.push({
+        kind:'ripple', color: color || 'rgba(255,255,255,.7)', size: maxR || 60,
+        x:x, y:y, vx:0, vy:0, gravity:0, drag:0, rot:0, rotSpeed:0,
+        wobble:0, wobbleSpeed:0, wobblePhase:0, life:1, decay:rand(0.42,0.52), fade:1
+      });
+    }
     function launchFirework(x,y){
       var startY = H + 14;
       var dist = Math.max(20, startY - y);
@@ -982,7 +1059,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       p.x += (p.vx||0)*dt + wob;
       p.y += (p.vy||0)*dt;
       p.rot += (p.rotSpeed||0)*dt;
-      if(p.kind==='star') p.twinklePhase = (p.twinklePhase||0) + (p.twinkleSpeed||1.5)*dt;
+      if(p.kind==='star' || p.kind==='firefly') p.twinklePhase = (p.twinklePhase||0) + (p.twinkleSpeed||1.5)*dt;
       if(p.decay) p.life -= p.decay*dt;
     }
     function loop(t){
@@ -1017,6 +1094,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       sparkleBurst: sparkleBurst,
       bubbleBurst: bubbleBurst,
       launchFirework: launchFirework,
+      ripple: ripple,
       resize: resize,
       getDimensions: function(){ return {W:W, H:H}; }
     };
@@ -1249,145 +1327,136 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     decorCanvas.addEventListener(evt, function(){ decorDragging = false; });
   });
 
-  /* ---- PAGE 5: Message in a Bottle ---- */
-  var bottleStage = document.getElementById('bottleStage');
-  var bottleWrap = document.getElementById('bottleWrap');
-  var bottleBtn = document.getElementById('bottleBtn');
-  var scrollOverlay = document.getElementById('scrollOverlay');
-  var scrollWrapEl = document.getElementById('scrollWrap');
-  var scrollNoteEl = document.getElementById('scrollNote');
+  /* ---- PAGE 5: A Dream Time With You (moonlit pond) ---- */
   var page5Canvas = document.getElementById('page5Canvas');
   var page5Field = makeField(page5Canvas);
   var page5Seeded = false;
 
-  function clamp(v,min,max){ return v<min?min:(v>max?max:v); }
+  var dreamStageEl = document.getElementById('dreamStage');
+  var moonBtn = document.getElementById('moonBtn');
+  var pondWaterBtn = document.getElementById('pondWater');
+  var coupleBtn = document.getElementById('coupleBtn');
+  var dreamAudioEl = document.getElementById('dreamAudio');
+  var songBtn = document.getElementById('songBtn');
+  var songBarsEl = document.getElementById('songBars');
+  var songHintEl = document.getElementById('songHint');
+  var songPlaying = false;
+  var transportPausedForSong = false;
 
-  var bottleRange = { x:70, y:44 };
-  function updateBottleRange(){
-    if(!bottleStage) return;
-    var r = bottleStage.getBoundingClientRect();
-    bottleRange.x = Math.max(20, r.width * 0.32);
-    bottleRange.y = Math.max(14, r.height * 0.26);
+  function setSongHint(text){
+    if(!songHintEl) return;
+    songHintEl.textContent = text || '';
+    songHintEl.classList.toggle('show', !!text);
   }
-
-  var bottleState = { x:0, y:0, tx:0, ty:0, running:false, open:false };
-  var bottleRafId = null;
-  var bottleTiltTried = false;
-  var bottleDragActive = false;
-
-  function bottleOrientationHandler(e){
-    if(e.gamma == null && e.beta == null) return;
-    var gx = clamp((e.gamma||0), -26, 26) / 26;
-    var by = clamp(((e.beta||40) - 40), -26, 26) / 26;
-    bottleState.tx = gx * bottleRange.x;
-    bottleState.ty = by * bottleRange.y;
+  function pauseBgMusicForSong(){
+    if(window.Tone && Tone.Transport && Tone.Transport.state === 'started'){
+      try{ Tone.Transport.pause(); transportPausedForSong = true; }catch(e){}
+    }
   }
-
-  function tryEnableTilt(){
-    if(bottleTiltTried) return;
-    bottleTiltTried = true;
-    if(typeof window.DeviceOrientationEvent === 'undefined') return;
-    if(typeof DeviceOrientationEvent.requestPermission === 'function'){
-      DeviceOrientationEvent.requestPermission().then(function(res){
-        if(res === 'granted'){ window.addEventListener('deviceorientation', bottleOrientationHandler); }
-      }).catch(function(){});
+  function resumeBgMusicAfterSong(){
+    if(transportPausedForSong && window.Tone && Tone.Transport){
+      try{ Tone.Transport.start(); }catch(e){}
+    }
+    transportPausedForSong = false;
+  }
+  function playDreamSong(){
+    if(!dreamAudioEl || !songBtn) return;
+    if(!CONFIG.songSrc){ setSongHint('add your song file path in CONFIG.songSrc 🎵'); return; }
+    pauseBgMusicForSong();
+    var playPromise = dreamAudioEl.play();
+    if(playPromise && playPromise.catch){
+      playPromise.then(function(){
+        songPlaying = true;
+        songBtn.classList.add('playing');
+        if(songBarsEl) songBarsEl.classList.add('show');
+        setSongHint('');
+      }).catch(function(){
+        resumeBgMusicAfterSong();
+        setSongHint('add your song file at ' + CONFIG.songSrc + ' to hear it here 🎵');
+      });
     } else {
-      window.addEventListener('deviceorientation', bottleOrientationHandler);
+      songPlaying = true;
+      songBtn.classList.add('playing');
+      if(songBarsEl) songBarsEl.classList.add('show');
     }
   }
-
-  function bottleSetTargetFromClient(clientX, clientY){
-    if(!bottleStage) return;
-    var r = bottleStage.getBoundingClientRect();
-    var relX = ((clientX - r.left) / r.width - 0.5) * 2;
-    var relY = ((clientY - r.top) / r.height - 0.5) * 2;
-    bottleState.tx = clamp(relX,-1,1) * bottleRange.x;
-    bottleState.ty = clamp(relY,-1,1) * bottleRange.y;
+  function stopDreamSong(){
+    if(!dreamAudioEl) return;
+    try{ dreamAudioEl.pause(); }catch(e){}
+    songPlaying = false;
+    if(songBtn) songBtn.classList.remove('playing');
+    if(songBarsEl) songBarsEl.classList.remove('show');
+    resumeBgMusicAfterSong();
+  }
+  if(songBtn){
+    songBtn.addEventListener('click', function(){
+      if(songPlaying){ stopDreamSong(); } else { playDreamSong(); }
+    });
+  }
+  if(dreamAudioEl){
+    dreamAudioEl.addEventListener('error', function(){
+      setSongHint('add your song file at ' + (CONFIG.songSrc||'audio/your-song.mp3') + ' to hear it here 🎵');
+    });
+    dreamAudioEl.addEventListener('ended', function(){
+      songPlaying = false;
+      if(songBtn) songBtn.classList.remove('playing');
+      if(songBarsEl) songBarsEl.classList.remove('show');
+      resumeBgMusicAfterSong();
+    });
   }
 
-  function bottleTick(t){
-    if(!bottleState.running) return;
-    bottleState.x += (bottleState.tx - bottleState.x) * 0.055;
-    bottleState.y += (bottleState.ty - bottleState.y) * 0.055;
-    var idleY = Math.sin(t*0.0011) * 5;
-    var idleRot = Math.sin(t*0.0007) * 3.2;
-    if(bottleWrap){
-      bottleWrap.style.transform = 'translate(calc(-50% + ' + bottleState.x.toFixed(2) + 'px), calc(-50% + ' + (bottleState.y+idleY).toFixed(2) + 'px)) rotate(' + idleRot.toFixed(2) + 'deg)';
-    }
-    bottleRafId = requestAnimationFrame(bottleTick);
+  function spawnShootingStar(){
+    if(!dreamStageEl) return;
+    var el = document.createElement('span');
+    el.className = 'shooting-star';
+    el.style.top = rand(6,20) + '%';
+    el.style.left = rand(-6,8) + '%';
+    dreamStageEl.appendChild(el);
+    setTimeout(function(){ el.remove(); }, 1300);
   }
-  function startBottleLoop(){
-    if(bottleState.running) return;
-    bottleState.running = true;
-    bottleRafId = requestAnimationFrame(bottleTick);
+  if(moonBtn){
+    moonBtn.addEventListener('click', function(){
+      spawnShootingStar();
+      var canvasRect = page5Canvas.getBoundingClientRect();
+      var br = moonBtn.getBoundingClientRect();
+      page5Field.sparkleBurst(br.left + br.width/2 - canvasRect.left, br.top + br.height/2 - canvasRect.top, 16, ['star','heart']);
+      playChime();
+    });
   }
-  function stopBottleLoop(){
-    bottleState.running = false;
-    if(bottleRafId) cancelAnimationFrame(bottleRafId);
+  if(pondWaterBtn){
+    pondWaterBtn.addEventListener('click', function(e){
+      var canvasRect = page5Canvas.getBoundingClientRect();
+      var x, y;
+      if(e.clientX || e.clientY){
+        x = e.clientX - canvasRect.left;
+        y = e.clientY - canvasRect.top;
+      } else {
+        var br = pondWaterBtn.getBoundingClientRect();
+        x = br.left + br.width/2 - canvasRect.left;
+        y = br.top + br.height/2 - canvasRect.top;
+      }
+      page5Field.ripple(x, y, 64, 'rgba(255,248,228,.55)');
+      page5Field.ripple(x, y, 40, 'rgba(255,248,228,.4)');
+      playChime();
+    });
   }
-
-  function openBottle(){
-    if(bottleState.open) return;
-    bottleState.open = true;
-    if(bottleWrap) bottleWrap.classList.add('open');
-    if(scrollOverlay) scrollOverlay.classList.add('show');
-    setTimeout(function(){ if(scrollWrapEl) scrollWrapEl.classList.add('unrolled'); }, 160);
-    if(bottleStage && bottleWrap){
-      var r = bottleStage.getBoundingClientRect();
-      var br = bottleWrap.getBoundingClientRect();
-      page5Field.bubbleBurst(br.left + br.width/2 - r.left, br.top + br.height*0.35 - r.top, 16);
-    }
-    playChime();
-  }
-  function closeBottle(){
-    if(!bottleState.open) return;
-    bottleState.open = false;
-    if(scrollWrapEl) scrollWrapEl.classList.remove('unrolled');
-    setTimeout(function(){
-      if(scrollOverlay) scrollOverlay.classList.remove('show');
-      if(bottleWrap) bottleWrap.classList.remove('open');
-    }, 380);
-  }
-  function resetBottle(){
-    bottleState.open = false;
-    if(scrollOverlay) scrollOverlay.classList.remove('show');
-    if(scrollWrapEl) scrollWrapEl.classList.remove('unrolled');
-    if(bottleWrap) bottleWrap.classList.remove('open');
-  }
-
-  function buildBottlePage(){
-    if(scrollNoteEl) scrollNoteEl.textContent = CONFIG.bottleNote;
-  }
-
-  if(bottleBtn){
-    bottleBtn.addEventListener('click', function(e){
+  if(coupleBtn){
+    coupleBtn.addEventListener('click', function(e){
       e.stopPropagation();
-      openBottle();
+      coupleBtn.classList.remove('leaning');
+      void coupleBtn.offsetWidth;
+      coupleBtn.classList.add('leaning');
+      var canvasRect = page5Canvas.getBoundingClientRect();
+      var br = coupleBtn.getBoundingClientRect();
+      page5Field.sparkleBurst(br.left + br.width/2 - canvasRect.left, br.top - canvasRect.top, 14, ['heart']);
+      playChime();
+      setTimeout(function(){ coupleBtn.classList.remove('leaning'); }, 900);
     });
   }
-  if(scrollOverlay){
-    scrollOverlay.addEventListener('click', function(e){
-      if(e.target === scrollOverlay) closeBottle();
-    });
-  }
-  var scrollCloseBtnEl = document.getElementById('scrollCloseBtn');
-  if(scrollCloseBtnEl){
-    scrollCloseBtnEl.addEventListener('click', function(e){ e.stopPropagation(); closeBottle(); });
-  }
-
-  if(bottleStage){
-    bottleStage.addEventListener('pointerdown', function(e){
-      if(!REDUCED_MOTION) tryEnableTilt();
-      bottleDragActive = true;
-      bottleSetTargetFromClient(e.clientX, e.clientY);
-    });
-    bottleStage.addEventListener('pointermove', function(e){
-      if(!bottleDragActive) return;
-      bottleSetTargetFromClient(e.clientX, e.clientY);
-    });
-    ['pointerup','pointerleave','pointercancel'].forEach(function(evt){
-      bottleStage.addEventListener(evt, function(){ bottleDragActive = false; });
-    });
+  function buildDreamPage(){
+    var capEl = document.getElementById('dreamCaption');
+    if(capEl) capEl.textContent = CONFIG.dreamCaption;
+    if(dreamAudioEl && CONFIG.songSrc){ dreamAudioEl.src = CONFIG.songSrc; }
   }
 
   /* ---- page 2: balloon pop ---- */
@@ -1697,14 +1766,15 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     } else { page3Field.stop(); }
     if(idx===3){ decorField.start(); } else { decorField.stop(); }
     if(idx===4){
-      updateBottleRange();
-      resetBottle();
-      if(!page5Seeded && !REDUCED_MOTION){ page5Field.seedAmbient(['bubble'], 5); page5Seeded = true; }
+      if(!page5Seeded && !REDUCED_MOTION){
+        page5Field.seedAmbient(['star'], 5, [0.02, 0.32]);
+        page5Field.addAmbient(['firefly'], 6, [0.42, 0.9]);
+        page5Seeded = true;
+      }
       page5Field.start();
-      if(!REDUCED_MOTION){ startBottleLoop(); }
     } else {
       page5Field.stop();
-      stopBottleLoop();
+      stopDreamSong();
     }
     if(idx===5){
       if(!page6Seeded && !REDUCED_MOTION){ page6Field.seedAmbient(['star'], 8); page6Seeded = true; }
@@ -1847,14 +1917,13 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     ambientField.resize();
     startField.resize();
     page5Field.resize();
-    updateBottleRange();
   }, 200));
 
   /* ---- initial build ---- */
   applyTheme(CONFIG.theme);
   buildCollage();
   buildWishPage();
-  buildBottlePage();
+  buildDreamPage();
   buildReasons();
   applyName(CONFIG.name);
 })();
