@@ -14,7 +14,6 @@
   --mint-200:#d3f8ec; --mint-300:#aef0dc; --mint-400:#7fe3c4; --mint-600:#2f9c7c;
   --lav-200:#ede1ff; --lav-400:#cbaeff;
   --peach-200:#ffe3cf; --butter-200:#fff2bf; --sky-200:#d7ecff; --blush-300:#ffcfe1;
-  --sea-100:#eaf8ff; --sea-300:#a8dcee; --sea-500:#4fa8c2; --sea-700:#1f5b6e;
   --ink:#6b2f4c; --white:#ffffff;
   --accent-1:#7fe3c4; --accent-2:#cbaeff;
   --font-display:'Luckiest Guy', cursive, sans-serif;
@@ -223,90 +222,84 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
 .page4.active .decor-hint{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .2s forwards; }
 
 /* ===== PAGE 5: a dream time with you (moonlit pond) ===== */
-.bg-moonlit{ background:linear-gradient(165deg, #1e2448 0%, #2b3564 22%, #4b3f74 48%, var(--pink-600) 78%, var(--pink-400) 100%); }
-.bg-moonlit::before{ background:#fff8e4; opacity:.16; }
-.bg-moonlit::after{ background:var(--pink-300); opacity:.22; }
+.bg-dreamnight{
+  background:linear-gradient(180deg, #201a42 0%, #2d2350 22%, #4a2f5e 42%, #79406b 62%, #b06a82 80%, #f0a8ba 100%);
+}
+.bg-dreamnight::before{ background:#ffffff; opacity:.1; }
+.bg-dreamnight::after{ background:var(--lav-400); opacity:.2; }
 
 .dream-hint{
-  position:relative; z-index:2; margin:0 0 1.8%; font-weight:700; font-size:clamp(11.5px,3.2vw,12.5px);
-  color:var(--pink-700); background:rgba(255,255,255,.92); padding:7px 16px; border-radius:999px;
-  box-shadow:0 6px 14px rgba(15,18,40,.3); opacity:0;
+  position:relative; z-index:2; margin:0 0 1.8%; font-weight:700; font-size:clamp(9.5px,2.5vw,10.5px);
+  color:var(--pink-700); background:rgba(255,255,255,.92); padding:6px 14px; border-radius:999px;
+  box-shadow:0 6px 14px rgba(0,0,0,.22); opacity:0; pointer-events:none;
 }
-.page5.active .dream-hint{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .15s forwards, floatBob 3.4s ease-in-out .8s infinite; }
+.page5.active .dream-hint{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .24s forwards, floatBob 3.4s ease-in-out .8s infinite; }
 
 .dream-stage{ position:relative; width:100%; flex:1; min-height:0; }
 .page5-canvas{ position:absolute; inset:0; z-index:3; pointer-events:none; }
 
-.moon-btn{ position:absolute; top:2%; left:50%; width:clamp(58px,21vw,96px); transform:translate(-50%,0); border:none; background:none; padding:0; cursor:pointer; z-index:2; transition:transform .15s ease; }
-.moon-btn::before{
-  content:''; position:absolute; z-index:-1; top:50%; left:50%; width:220%; aspect-ratio:1/1;
-  transform:translate(-50%,-50%); border-radius:50%;
-  background:radial-gradient(circle, rgba(255,248,220,.55) 0%, rgba(255,248,220,0) 68%);
+.dream-moon{ position:absolute; z-index:2; top:5%; left:50%; transform:translateX(-50%); width:22%; max-width:88px; border:none; background:none; padding:0; cursor:pointer; }
+.dream-moon-svg{ position:relative; z-index:1; width:100%; height:auto; display:block; filter:drop-shadow(0 4px 16px rgba(255,244,200,.55)); }
+.dream-moon-halo{
+  position:absolute; inset:-45%; z-index:0; border-radius:50%; pointer-events:none;
+  background:radial-gradient(circle, rgba(255,248,220,.55) 0%, rgba(255,248,220,0) 70%);
+  animation:sealPulse 3.4s ease-in-out infinite;
 }
-.page5.active .moon-btn::before{ animation:glowPulse 3.6s ease-in-out infinite; }
-.moon-btn:active{ transform:translate(-50%,0) scale(.94); }
-.moon-svg{ width:100%; height:auto; display:block; filter:drop-shadow(0 0 10px rgba(255,248,220,.5)); }
+.dream-moon-halo.burst{ animation:moonBurstGlow .9s ease; }
 
-.dream-star{ position:absolute; z-index:2; color:#fff8e4; font-size:clamp(10px,3vw,13px); pointer-events:none; opacity:.9; }
-.ds-a{ top:9%; left:23%; }
-.ds-b{ top:15%; right:19%; }
-.page5.active .ds-a{ animation:sprinkleTwinkle 2.4s ease-in-out .3s infinite; }
-.page5.active .ds-b{ animation:sprinkleTwinkle 2.4s ease-in-out 1s infinite; }
-
-.shooting-star{
-  position:absolute; width:60px; height:2.5px; z-index:2; pointer-events:none; border-radius:2px;
-  background:linear-gradient(90deg, rgba(255,248,220,0), #fff8e4 70%, #fffef5);
-  filter:drop-shadow(0 0 6px rgba(255,248,220,.85));
-  animation:shootAcross 1.15s ease-in forwards;
+.pond-scene{ position:absolute; z-index:1; left:0; right:0; bottom:0; height:42%; overflow:hidden; border-radius:0 0 18px 18px; }
+.pond-water{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+.moon-reflection{
+  position:absolute; left:50%; top:6%; width:26%; height:64%; transform:translate(-50%,0);
+  background:radial-gradient(ellipse at center, rgba(255,248,220,.55) 0%, rgba(255,248,220,.16) 55%, rgba(255,248,220,0) 80%);
+  filter:blur(1.5px); pointer-events:none; animation:reflectionShimmer 4.2s ease-in-out infinite;
+}
+.reeds{ position:absolute; bottom:0; width:16%; height:60%; pointer-events:none; transform-origin:bottom center; }
+.reeds-left{ left:2%; animation:reedSwayLeft 6.5s ease-in-out infinite; }
+.reeds-right{ right:2%; animation:reedSwayRight 7.2s ease-in-out 1.1s infinite; }
+.lily{ position:absolute; width:9%; max-width:34px; bottom:14%; pointer-events:none; filter:drop-shadow(0 2px 4px rgba(0,0,0,.25)); animation:lilyDrift 6s ease-in-out infinite; }
+.lily-a{ left:16%; animation-delay:0s; }
+.lily-b{ right:20%; bottom:22%; animation-delay:1.4s; }
+.ripple-layer{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+.pond-ripple{
+  position:absolute; width:14px; height:14px; border-radius:50%;
+  border:2px solid rgba(255,255,255,.6); transform:translate(-50%,-50%) scale(.2,.08); opacity:.8;
+  animation:rippleExpand 1.3s ease-out forwards;
 }
 
-.dream-pond{ position:absolute; left:0; right:0; bottom:0; height:44%; z-index:1; }
-.pond-water{ position:absolute; inset:0; width:100%; height:100%; display:block; border:none; background:none; padding:0; cursor:pointer; overflow:hidden; }
-.pond-svg{ width:100%; height:100%; display:block; }
-
-.pond-reeds{ position:absolute; bottom:0; width:16%; max-width:60px; height:60%; pointer-events:none; z-index:2; }
-.reeds-left{ left:2%; transform-origin:bottom center; }
-.reeds-right{ right:2%; transform-origin:bottom center; }
-.page5.active .reeds-left{ animation:reedSwayL 4.5s ease-in-out infinite; }
-.page5.active .reeds-right{ animation:reedSwayR 5.2s ease-in-out .4s infinite; }
-
-.couple-btn{ position:absolute; left:50%; bottom:36%; width:54%; max-width:185px; transform:translate(-50%,0); border:none; background:none; padding:0; cursor:pointer; z-index:2; transform-origin:bottom center; }
-.couple-btn:active{ transform:translate(-50%,0) scale(.97); }
-.couple-svg{ width:100%; height:auto; display:block; filter:drop-shadow(0 8px 14px rgba(10,14,30,.35)); }
-.couple-btn.leaning{ animation:coupleLean .9s cubic-bezier(.34,1.56,.64,1); }
+.dream-couple{ position:absolute; z-index:2; left:50%; bottom:6%; transform:translateX(-50%); width:34%; max-width:150px; border:none; background:none; padding:0; cursor:pointer; }
+.dream-couple-svg{ width:100%; height:auto; display:block; overflow:visible; }
+.figure{ transition:transform .5s cubic-bezier(.34,1.56,.64,1); transform-box:fill-box; transform-origin:center bottom; }
+.dream-couple.close .figure-a{ transform:translateX(5px) rotate(-2deg); }
+.dream-couple.close .figure-b{ transform:translateX(-5px) rotate(2deg); }
 
 .dream-caption{
-  font-family:var(--font-script); font-size:clamp(16px,4.6vw,20px); color:#fff8ec;
-  text-shadow:0 3px 14px rgba(10,14,30,.4), 0 0 18px rgba(255,214,235,.35); margin:3% 0 0; opacity:0;
+  position:relative; z-index:2; margin:2.4% 0 0; font-family:var(--font-script); font-size:clamp(15px,4.4vw,18px);
+  color:#fff; text-shadow:0 2px 10px rgba(0,0,0,.35); background:rgba(255,255,255,.15);
+  padding:6px 18px; border-radius:999px; opacity:0; pointer-events:none;
 }
-.page5.active .dream-caption{ animation:popIn .6s cubic-bezier(.34,1.56,.64,1) .3s forwards, headlineGlow 3s ease-in-out 1.3s infinite; }
+.page5.active .dream-caption{ animation:popIn .8s cubic-bezier(.34,1.56,.64,1) 2s forwards; }
 
-.song-player{ display:flex; flex-direction:column; align-items:center; gap:6px; margin-top:3%; opacity:0; }
-.page5.active .song-player{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .5s forwards; }
-.song-row{ display:flex; align-items:center; gap:10px; }
-.song-btn{
-  width:clamp(46px,13vw,54px); height:clamp(46px,13vw,54px); border-radius:50%; border:none; cursor:pointer;
-  background:linear-gradient(160deg,#fff,var(--pink-100)); color:var(--pink-600);
-  box-shadow:0 8px 18px rgba(15,18,40,.3), inset 0 0 0 2px rgba(255,255,255,.85);
-  display:flex; align-items:center; justify-content:center;
-  transition:transform .15s ease, background .3s ease, color .3s ease;
+.dream-clouds{ position:absolute; inset:0; z-index:1; overflow:hidden; pointer-events:none; }
+.dream-cloud{
+  position:absolute; border-radius:50%; background:rgba(255,255,255,.32); filter:blur(9px);
+  animation:cloudDrift ease-in-out infinite;
 }
-.page5.active .song-btn{ animation:songBtnPulse 2.6s ease-in-out infinite; }
-.page5.active .song-btn.playing{ animation:none; }
-.song-btn:active{ transform:scale(.9); }
-.song-btn.playing{ background:linear-gradient(160deg,var(--pink-400),var(--pink-600)); color:#fff; }
-.song-btn .icon-pause{ display:none; }
-.song-btn.playing .icon-play{ display:none; }
-.song-btn.playing .icon-pause{ display:block; }
-.song-bars{ display:flex; align-items:flex-end; gap:3px; height:20px; opacity:0; transition:opacity .3s ease; }
-.song-bars.show{ opacity:1; }
-.song-bars i{ width:4px; border-radius:2px; background:#fff8ec; display:block; box-shadow:0 0 6px rgba(255,248,236,.7); animation:songBarBeat .9s ease-in-out infinite; }
-.song-bars i:nth-child(1){ height:7px; animation-delay:0s; }
-.song-bars i:nth-child(2){ height:15px; animation-delay:.15s; }
-.song-bars i:nth-child(3){ height:10px; animation-delay:.3s; }
-.song-bars i:nth-child(4){ height:17px; animation-delay:.45s; }
-.song-hint{ margin:0; font-size:10px; font-weight:700; color:var(--pink-700); background:#fff; padding:4px 11px; border-radius:999px; opacity:0; max-width:78vw; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,.16); transition:opacity .3s ease; }
-.song-hint.show{ opacity:.95; }
+.cloud-1{ width:36%; height:11%; top:12%; left:-8%; animation-duration:20s; }
+.cloud-2{ width:26%; height:8%; top:20%; left:58%; opacity:.7; animation-duration:24s; animation-delay:-7s; }
+
+.dream-song-btn{
+  position:absolute; z-index:6; top:3%; right:4%; width:44px; height:44px; border-radius:50%;
+  border:none; background:rgba(255,255,255,.95); box-shadow:0 8px 18px rgba(0,0,0,.3);
+  font-size:17px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:transform .15s ease, background .3s ease, box-shadow .3s ease;
+}
+.dream-song-btn:active{ transform:scale(.9); }
+.dream-song-btn.playing{ background:var(--pink-500); color:#fff; box-shadow:0 10px 24px rgba(240,71,156,.5); }
+.dream-song-btn.playing::after{
+  content:''; position:absolute; inset:-6px; border-radius:50%; border:2px solid rgba(240,71,156,.55);
+  animation:songPulseRing 1.6s ease-out infinite; pointer-events:none;
+}
 
 /* ===== PAGE 6: constellation of reasons ===== */
 .bg-night{ background:radial-gradient(140% 120% at 50% 10%, rgba(0,0,0,0) 0%, rgba(30,10,20,.4) 100%), radial-gradient(120% 120% at 50% 25%, var(--pink-400) 0%, var(--pink-600) 55%, var(--pink-700) 100%); }
@@ -488,18 +481,26 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
 @keyframes startGradient{ 0%,100%{ background-position:0% 30%; } 50%{ background-position:100% 70%; } }
 @keyframes startBob{ 0%,100%{ transform:translateY(0) rotate(-4deg); } 50%{ transform:translateY(-10px) rotate(4deg); } }
 @keyframes btnPulse{ 0%,100%{ box-shadow:0 10px 22px rgba(240,71,156,.4); } 50%{ box-shadow:0 14px 30px rgba(240,71,156,.6), 0 0 0 7px rgba(255,255,255,.35); } }
-@keyframes reedSwayL{ 0%,100%{ transform:rotate(-2deg); } 50%{ transform:rotate(2deg); } }
-@keyframes reedSwayR{ 0%,100%{ transform:scaleX(-1) rotate(-2deg); } 50%{ transform:scaleX(-1) rotate(2deg); } }
-@keyframes coupleLean{ 0%{ transform:translate(-50%,0) scale(1); } 40%{ transform:translate(-50%,-3px) scale(1.045); } 100%{ transform:translate(-50%,0) scale(1); } }
-@keyframes shootAcross{
-  0%{ transform:translate(0,0) rotate(24deg) scaleX(.3); opacity:0; }
-  15%{ transform:translate(26px,14px) rotate(24deg) scaleX(1); opacity:1; }
-  78%{ opacity:.9; }
-  100%{ transform:translate(210px,110px) rotate(24deg) scaleX(1); opacity:0; }
-}
-@keyframes songBarBeat{ 0%,100%{ transform:scaleY(.35); } 50%{ transform:scaleY(1); } }
-@keyframes songBtnPulse{ 0%,100%{ box-shadow:0 8px 18px rgba(15,18,40,.3), inset 0 0 0 2px rgba(255,255,255,.85); } 50%{ box-shadow:0 10px 24px rgba(15,18,40,.42), inset 0 0 0 2px rgba(255,255,255,.95); } }
 @keyframes loveFloat{ 0%,100%{ transform:translateY(0) rotate(-5deg) scale(1); } 50%{ transform:translateY(-8px) rotate(5deg) scale(1.18); } }
+@keyframes reflectionShimmer{
+  0%,100%{ opacity:.5; transform:translate(-50%,0) scaleY(1); }
+  33%{ opacity:.7; transform:translate(-48%,1%) scaleY(1.05); }
+  66%{ opacity:.6; transform:translate(-52%,-1%) scaleY(.97); }
+}
+@keyframes rippleExpand{
+  0%{ transform:translate(-50%,-50%) scale(.2,.08); opacity:.8; }
+  100%{ transform:translate(-50%,-50%) scale(7,2.8); opacity:0; }
+}
+@keyframes moonBurstGlow{
+  0%{ transform:scale(1); opacity:1; }
+  40%{ transform:scale(1.4); opacity:1; }
+  100%{ transform:scale(1); opacity:1; }
+}
+@keyframes reedSwayLeft{ 0%,100%{ transform:rotate(0deg); } 50%{ transform:rotate(1.6deg); } }
+@keyframes reedSwayRight{ 0%,100%{ transform:scaleX(-1) rotate(0deg); } 50%{ transform:scaleX(-1) rotate(-1.6deg); } }
+@keyframes lilyDrift{ 0%,100%{ transform:translateY(0) rotate(0deg); } 50%{ transform:translateY(-3px) rotate(3deg); } }
+@keyframes songPulseRing{ 0%{ transform:scale(.85); opacity:.9; } 100%{ transform:scale(1.4); opacity:0; } }
+@keyframes cloudDrift{ 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(26px); } }
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
@@ -583,91 +584,85 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       <p class="decor-hint content">🎆 tap or drag for fireworks!</p>
     </section>
 
-    <!-- PAGE 5 : A DREAM TIME WITH YOU — tap the moon, the water, or the two of you; play your song -->
+    <!-- PAGE 5 : A DREAM TIME WITH YOU — moonlit pond. tap the moon, the water, or the two of you -->
     <section class="page page5" data-page="4">
-      <div class="bg-pastel bg-moonlit"></div>
-      <p class="dream-hint content" id="dreamHint">🌙 tap the moon, the water, or us ✨</p>
+      <div class="bg-pastel bg-dreamnight"></div>
+      <p class="dream-hint content" id="dreamHint">tap the moon, the water, or the two of you ✨</p>
 
       <div class="dream-stage content" id="dreamStage">
         <canvas class="page5-canvas" id="page5Canvas"></canvas>
 
-        <button type="button" class="moon-btn" id="moonBtn" aria-label="Tap the moon to send a shooting star">
-          <svg class="moon-svg" viewBox="0 0 100 100" aria-hidden="true">
-            <circle cx="50" cy="50" r="40" fill="#fff8e4"/>
-            <circle cx="34" cy="36" r="7" fill="#f2e3bd" opacity=".5"/>
-            <circle cx="61" cy="28" r="4.5" fill="#f2e3bd" opacity=".4"/>
-            <circle cx="64" cy="58" r="8.5" fill="#f2e3bd" opacity=".45"/>
-            <circle cx="37" cy="65" r="5" fill="#f2e3bd" opacity=".35"/>
+        <div class="dream-clouds" aria-hidden="true">
+          <span class="dream-cloud cloud-1"></span>
+          <span class="dream-cloud cloud-2"></span>
+        </div>
+
+        <button type="button" class="dream-moon" id="dreamMoon" aria-label="Tap the moon">
+          <span class="dream-moon-halo" id="dreamMoonHalo" aria-hidden="true"></span>
+          <svg viewBox="0 0 100 100" class="dream-moon-svg" aria-hidden="true">
+            <defs>
+              <radialGradient id="moonGrad" cx="38%" cy="34%" r="75%">
+                <stop offset="0%" stop-color="#fffdf3"/>
+                <stop offset="60%" stop-color="#fff2cf"/>
+                <stop offset="100%" stop-color="#eed69a"/>
+              </radialGradient>
+            </defs>
+            <circle cx="50" cy="50" r="42" fill="url(#moonGrad)"/>
+            <circle cx="34" cy="36" r="8" fill="#e2c98f" opacity=".45"/>
+            <circle cx="62" cy="58" r="11" fill="#e2c98f" opacity=".35"/>
+            <circle cx="58" cy="30" r="5" fill="#e2c98f" opacity=".4"/>
+            <circle cx="40" cy="66" r="4" fill="#e2c98f" opacity=".3"/>
           </svg>
         </button>
-        <span class="dream-star ds-a" aria-hidden="true">✦</span>
-        <span class="dream-star ds-b" aria-hidden="true">✦</span>
 
-        <div class="dream-pond" id="dreamPond">
-          <button type="button" class="pond-water" id="pondWater" aria-label="Tap the water to make ripples">
-            <svg class="pond-svg" viewBox="0 0 400 150" preserveAspectRatio="none" aria-hidden="true">
-              <defs>
-                <linearGradient id="dreamPondGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#3a4472"/>
-                  <stop offset="45%" stop-color="#2a3560"/>
-                  <stop offset="100%" stop-color="#1c2648"/>
-                </linearGradient>
-                <linearGradient id="dreamReflGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#fff8e4" stop-opacity=".8"/>
-                  <stop offset="100%" stop-color="#fff8e4" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <path d="M0,20 Q100,4 200,18 T400,16 L400,150 L0,150 Z" fill="url(#dreamPondGrad)"/>
-              <rect x="172" y="18" width="56" height="96" fill="url(#dreamReflGrad)" opacity=".6"/>
-              <path d="M168,42 Q200,37 232,42" stroke="#fff8e4" stroke-width="2" fill="none" opacity=".3"/>
-              <path d="M163,66 Q200,59 237,66" stroke="#fff8e4" stroke-width="2" fill="none" opacity=".24"/>
-              <path d="M170,90 Q200,83 230,90" stroke="#fff8e4" stroke-width="1.6" fill="none" opacity=".2"/>
-            </svg>
-          </button>
-
-          <svg class="pond-reeds reeds-left" viewBox="0 0 60 90" aria-hidden="true">
-            <path d="M8,90 C6,64 14,38 10,12" stroke="#1c2648" stroke-width="4" fill="none" stroke-linecap="round"/>
-            <path d="M20,90 C16,68 24,46 18,20" stroke="#233058" stroke-width="4" fill="none" stroke-linecap="round"/>
-            <path d="M32,90 C30,72 36,50 30,26" stroke="#1c2648" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+        <div class="pond-scene" id="pondScene" aria-hidden="true">
+          <svg class="pond-water" viewBox="0 0 800 220" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="pondGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(64,58,116,.5)"/>
+                <stop offset="100%" stop-color="rgba(16,14,36,.78)"/>
+              </linearGradient>
+            </defs>
+            <path d="M0,46 Q50,24 100,46 T200,46 T300,46 T400,46 T500,46 T600,46 T700,46 T800,46 L800,220 L0,220 Z" fill="url(#pondGrad)"/>
           </svg>
-          <svg class="pond-reeds reeds-right" viewBox="0 0 60 90" aria-hidden="true">
-            <path d="M52,90 C54,64 46,38 50,12" stroke="#1c2648" stroke-width="4" fill="none" stroke-linecap="round"/>
-            <path d="M40,90 C44,68 36,46 42,20" stroke="#233058" stroke-width="4" fill="none" stroke-linecap="round"/>
-            <path d="M28,90 C30,72 24,50 30,26" stroke="#1c2648" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+          <div class="moon-reflection" aria-hidden="true"></div>
+          <svg class="reeds reeds-left" viewBox="0 0 120 140" aria-hidden="true">
+            <path d="M8,140 C6,100 20,70 14,30 M24,140 C22,96 34,66 28,20 M40,140 C40,100 48,74 44,36" stroke="rgba(20,40,30,.6)" stroke-width="4" fill="none" stroke-linecap="round"/>
           </svg>
-
-          <button type="button" class="couple-btn" id="coupleBtn" aria-label="Tap the two of you">
-            <svg class="couple-svg" viewBox="0 0 200 70" aria-hidden="true">
-              <path d="M0,70 Q40,42 100,47 T200,70 Z" fill="#1c2648"/>
-              <g fill="#28325c">
-                <ellipse cx="78" cy="46" rx="17" ry="11"/>
-                <ellipse cx="74" cy="28" rx="13" ry="16" transform="rotate(-6 74 28)"/>
-                <circle cx="72" cy="10" r="8.5"/>
-                <ellipse cx="100" cy="22" rx="16" ry="6" transform="rotate(-3 100 22)"/>
-                <ellipse cx="122" cy="45" rx="16" ry="10.5"/>
-                <ellipse cx="118" cy="27" rx="12.5" ry="15.5" transform="rotate(7 118 27)"/>
-                <circle cx="120" cy="9" r="8"/>
-              </g>
-              <path d="M65,4 Q72,-1 80,3" stroke="rgba(255,244,214,.5)" stroke-width="2" fill="none" stroke-linecap="round"/>
-              <path d="M113,3 Q120,-1 128,2" stroke="rgba(255,244,214,.5)" stroke-width="2" fill="none" stroke-linecap="round"/>
-            </svg>
-          </button>
+          <svg class="reeds reeds-right" viewBox="0 0 120 140" aria-hidden="true">
+            <path d="M112,140 C114,98 100,70 106,28 M96,140 C98,96 86,66 92,18 M80,140 C80,100 72,74 76,34" stroke="rgba(20,40,30,.6)" stroke-width="4" fill="none" stroke-linecap="round"/>
+          </svg>
+          <span class="lily lily-a" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 4 A16 16 0 1 1 8 34 Z" fill="#3f6a4f" opacity=".8"/></svg></span>
+          <span class="lily lily-b" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 4 A16 16 0 1 1 8 34 Z" fill="#3a6350" opacity=".75"/></svg></span>
+          <div class="ripple-layer" id="rippleLayer"></div>
         </div>
+
+        <button type="button" class="dream-couple" id="dreamCouple" aria-label="Tap the two of you">
+          <svg viewBox="0 0 200 120" class="dream-couple-svg" aria-hidden="true">
+            <!-- shoreline / blanket the two are sitting on -->
+            <path d="M46 103 C46 111 154 111 154 103 L154 118 L46 118Z" fill="rgba(20,16,40,.5)"/>
+
+            <!-- girl: A-line skirt silhouette + side ponytail -->
+            <g class="figure figure-a">
+              <path d="M52 103 C48 82 58 64 78 60 C96 64 104 82 100 103 Z" fill="rgba(20,16,40,.85)"/>
+              <circle cx="76" cy="50" r="10.5" fill="rgba(20,16,40,.85)"/>
+              <path d="M85 45 C91 47 93 55 89 63 C87 67 82 66 82 61 C81 55 81 49 85 45 Z" fill="rgba(20,16,40,.85)"/>
+            </g>
+
+            <!-- boy: straighter silhouette + short hair -->
+            <g class="figure figure-b">
+              <path d="M110 103 C107 80 113 62 128 58 C142 62 147 80 145 103 Z" fill="rgba(20,16,40,.85)"/>
+              <circle cx="127" cy="49" r="11" fill="rgba(20,16,40,.85)"/>
+              <path d="M117 45 C119 39 133 39 136 45 C136 41 131 37 127 37 C122 37 117 40 117 45 Z" fill="rgba(20,16,40,.85)"/>
+            </g>
+          </svg>
+        </button>
+
+        <button type="button" class="dream-song-btn" id="dreamSongBtn" aria-label="Play our song">▶️</button>
       </div>
 
-      <p class="dream-caption content" id="dreamCaption">A dream time with you</p>
-
-      <div class="song-player content" id="songPlayer">
-        <div class="song-row">
-          <button type="button" class="song-btn" id="songBtn" aria-label="Play our song">
-            <svg class="icon-play" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M7 4 L20 12 L7 20 Z" fill="currentColor"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><rect x="6" y="4" width="4.4" height="16" rx="1.4" fill="currentColor"/><rect x="13.6" y="4" width="4.4" height="16" rx="1.4" fill="currentColor"/></svg>
-          </button>
-          <span class="song-bars" id="songBars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-        </div>
-        <p class="song-hint" id="songHint"></p>
-      </div>
-      <audio id="dreamAudio" preload="none" loop></audio>
+      <p class="dream-caption content" id="dreamCaption">A dream time with you, <span data-name-slot>Friend</span> 🌙</p>
+      <audio id="dreamAudio" preload="none" hidden></audio>
     </section>
 
     <!-- PAGE 6 : CONSTELLATION OF REASONS (5 stars) -->
@@ -796,9 +791,11 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       signature: "With Love"
     },
 
-    // PAGE 5 — the moonlit pond scene: caption text + your song file
-    dreamCaption: "A dream time with you",
-    songSrc: "audio/our-song.mp3", // put your downloaded song here — create an "audio" folder next to "images" and match this filename (or change the path)
+    // PAGE 5 — "A Dream Time With You": drop your song file in an "audio" folder
+    // next to your "images" folder, e.g. audio/our-song.mp3, and point to it below.
+    // Leave songSrc as "" to hide the play button entirely.
+    songSrc: "audio/our-song.mp3",
+    songLoop: false,
 
     // PAGE 6 — 5 best reasons (one per star)
     reasons: [
@@ -904,17 +901,26 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       ctx.fillStyle = 'rgba(255,255,255,.3)';
       ctx.beginPath(); ctx.arc(-p.size*0.16,-p.size*0.16,p.size*0.15,0,6.2832); ctx.fill();
     } else if(p.kind === 'firefly'){
-      var flicker = 0.35 + 0.65*Math.max(0, Math.sin(p.twinklePhase||0));
-      ctx.globalAlpha *= flicker;
-      ctx.fillStyle = 'rgba(255,241,168,.5)';
-      ctx.beginPath(); ctx.arc(0,0,p.size*1.7,0,6.2832); ctx.fill();
-      ctx.fillStyle = '#fff8d6';
-      ctx.beginPath(); ctx.arc(0,0,p.size*0.42,0,6.2832); ctx.fill();
-    } else if(p.kind === 'ripple'){
-      var prog = 1 - Math.max(0, Math.min(1,p.life));
-      ctx.strokeStyle = p.color;
-      ctx.lineWidth = Math.max(1, p.size*0.05);
-      ctx.beginPath(); ctx.arc(0,0, p.size*prog, 0, 6.2832); ctx.stroke();
+      var flick = 0.3 + 0.7*Math.abs(Math.sin(p.flickerPhase||0));
+      ctx.globalAlpha *= flick;
+      var fg = ctx.createRadialGradient(0,0,0,0,0,p.size*2.4);
+      fg.addColorStop(0, p.color);
+      fg.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = fg;
+      ctx.beginPath(); ctx.arc(0,0,p.size*2.4,0,6.2832); ctx.fill();
+      ctx.fillStyle = p.color;
+      ctx.beginPath(); ctx.arc(0,0,p.size*0.5,0,6.2832); ctx.fill();
+    } else if(p.kind === 'shootingstar'){
+      var ang = Math.atan2(p.vy, p.vx);
+      var len = p.size*10;
+      var tailX = -Math.cos(ang)*len, tailY = -Math.sin(ang)*len;
+      var sg = ctx.createLinearGradient(0,0,tailX,tailY);
+      sg.addColorStop(0,'rgba(255,250,224,.95)');
+      sg.addColorStop(1,'rgba(255,250,224,0)');
+      ctx.strokeStyle = sg; ctx.lineWidth = p.size*0.7; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(tailX,tailY); ctx.stroke();
+      ctx.fillStyle = '#fffdf3';
+      ctx.beginPath(); ctx.arc(0,0,p.size*0.55,0,6.2832); ctx.fill();
     }
     ctx.restore();
   }
@@ -934,7 +940,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     }
     resize();
 
-    function spawnAmbient(kind, yRange){
+    function spawnAmbient(kind){
       var p = { kind:kind, color:pick(COLORS), rot:rand(0,6.28), rotSpeed:rand(-2,2),
         wobble:rand(6,16), wobbleSpeed:rand(0.8,2.2), wobblePhase:rand(0,6.28), life:1, decay:0, fade:fadeMul };
       if(kind==='confetti'){
@@ -942,7 +948,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       } else if(kind==='heart'){
         p.size=rand(10,17); p.x=rand(0,W); p.y=H+rand(0,H*0.3); p.vx=rand(-6,6); p.vy=-rand(16,26); p.gravity=-rand(1,4); p.drag=0.2;
       } else if(kind==='star'){
-        p.size=rand(6,11); p.x=rand(0,W); p.y = yRange ? rand(H*yRange[0],H*yRange[1]) : rand(0,H); p.vx=0; p.vy=0; p.gravity=0; p.drag=0; p.twinklePhase=rand(0,6.28); p.twinkleSpeed=rand(1.2,2.4);
+        p.size=rand(6,11); p.x=rand(0,W); p.y=rand(0,H); p.vx=0; p.vy=0; p.gravity=0; p.drag=0; p.twinklePhase=rand(0,6.28); p.twinkleSpeed=rand(1.2,2.4);
       } else if(kind==='ribbon'){
         p.size=rand(20,32); p.x=rand(0,W); p.y=rand(-H*0.3,H*0.5); p.vx=rand(-4,4); p.vy=rand(6,14); p.gravity=rand(2,6); p.drag=0.3;
       } else if(kind==='petal'){
@@ -950,17 +956,19 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       } else if(kind==='bubble'){
         p.size=rand(5,12); p.x=rand(0,W); p.y=H+rand(0,H*0.4); p.vx=rand(-6,6); p.vy=-rand(14,28); p.gravity=-rand(2,6); p.drag=0.22;
       } else if(kind==='firefly'){
-        var fMin = yRange ? H*yRange[0] : H*0.35, fMax = yRange ? H*yRange[1] : H*0.9;
-        p.size=rand(3,5.5); p.x=rand(0,W); p.y=rand(fMin,fMax); p.vx=rand(-6,6); p.vy=rand(-7,7); p.gravity=0; p.drag=0.15; p.twinklePhase=rand(0,6.28); p.twinkleSpeed=rand(1.4,2.6);
+        p.size=rand(3,5); p.x=rand(W*0.12,W*0.88); p.y=rand(H*0.42,H*0.95);
+        p.vx=rand(-5,5); p.vy=-rand(4,10); p.gravity=-rand(0.6,1.6); p.drag=0.06;
+        p.color = pick(['#fff3a0','#e8ffb0','#fff8d6']);
+        p.flickerPhase = rand(0,6.28); p.flickerSpeed = rand(1.6,3.2);
       }
       return p;
     }
-    function seedAmbient(kinds, countEach, yRange){
+    function seedAmbient(kinds, countEach){
       particles = [];
-      kinds.forEach(function(k){ for(var i=0;i<countEach;i++) particles.push(spawnAmbient(k, yRange)); });
+      kinds.forEach(function(k){ for(var i=0;i<countEach;i++) particles.push(spawnAmbient(k)); });
     }
-    function addAmbient(kinds, countEach, yRange){
-      kinds.forEach(function(k){ for(var i=0;i<countEach;i++) particles.push(spawnAmbient(k, yRange)); });
+    function addAmbient(kinds, countEach){
+      kinds.forEach(function(k){ for(var i=0;i<countEach;i++) particles.push(spawnAmbient(k)); });
     }
     function burst(x,y,count){
       for(var i=0;i<count;i++){
@@ -1019,11 +1027,12 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
         });
       }
     }
-    function ripple(x,y,maxR,color){
+    function shootingStar(x,y){
       particles.push({
-        kind:'ripple', color: color || 'rgba(255,255,255,.7)', size: maxR || 60,
-        x:x, y:y, vx:0, vy:0, gravity:0, drag:0, rot:0, rotSpeed:0,
-        wobble:0, wobbleSpeed:0, wobblePhase:0, life:1, decay:rand(0.42,0.52), fade:1
+        kind:'shootingstar', color:'#fffdf3', size:rand(2.6,3.6),
+        x:x, y:y, vx:260+rand(-40,40), vy:90+rand(-30,30),
+        gravity:0, drag:0, rot:0, rotSpeed:0,
+        wobble:0, wobbleSpeed:0, wobblePhase:0, life:1, decay:rand(1.1,1.6), fade:1
       });
     }
     function launchFirework(x,y){
@@ -1059,7 +1068,8 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       p.x += (p.vx||0)*dt + wob;
       p.y += (p.vy||0)*dt;
       p.rot += (p.rotSpeed||0)*dt;
-      if(p.kind==='star' || p.kind==='firefly') p.twinklePhase = (p.twinklePhase||0) + (p.twinkleSpeed||1.5)*dt;
+      if(p.kind==='star') p.twinklePhase = (p.twinklePhase||0) + (p.twinkleSpeed||1.5)*dt;
+      if(p.kind==='firefly') p.flickerPhase = (p.flickerPhase||0) + (p.flickerSpeed||2)*dt;
       if(p.decay) p.life -= p.decay*dt;
     }
     function loop(t){
@@ -1093,8 +1103,8 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
       ringBurst: ringBurst,
       sparkleBurst: sparkleBurst,
       bubbleBurst: bubbleBurst,
+      shootingStar: shootingStar,
       launchFirework: launchFirework,
-      ripple: ripple,
       resize: resize,
       getDimensions: function(){ return {W:W, H:H}; }
     };
@@ -1328,135 +1338,129 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
   });
 
   /* ---- PAGE 5: A Dream Time With You (moonlit pond) ---- */
+  var dreamStage = document.getElementById('dreamStage');
+  var dreamMoon = document.getElementById('dreamMoon');
+  var dreamMoonHalo = document.getElementById('dreamMoonHalo');
+  var pondScene = document.getElementById('pondScene');
+  var rippleLayer = document.getElementById('rippleLayer');
+  var dreamCouple = document.getElementById('dreamCouple');
+  var dreamSongBtn = document.getElementById('dreamSongBtn');
+  var dreamAudio = document.getElementById('dreamAudio');
   var page5Canvas = document.getElementById('page5Canvas');
   var page5Field = makeField(page5Canvas);
   var page5Seeded = false;
 
-  var dreamStageEl = document.getElementById('dreamStage');
-  var moonBtn = document.getElementById('moonBtn');
-  var pondWaterBtn = document.getElementById('pondWater');
-  var coupleBtn = document.getElementById('coupleBtn');
-  var dreamAudioEl = document.getElementById('dreamAudio');
-  var songBtn = document.getElementById('songBtn');
-  var songBarsEl = document.getElementById('songBars');
-  var songHintEl = document.getElementById('songHint');
   var songPlaying = false;
-  var transportPausedForSong = false;
+  var bgMusicWasPlaying = false;
+  var moonBurstTimeout = null;
+  var coupleClose = false;
 
-  function setSongHint(text){
-    if(!songHintEl) return;
-    songHintEl.textContent = text || '';
-    songHintEl.classList.toggle('show', !!text);
+  function buildDreamPage(){
+    if(CONFIG.songSrc){
+      dreamAudio.src = CONFIG.songSrc;
+      dreamAudio.loop = !!CONFIG.songLoop;
+    } else if(dreamSongBtn){
+      dreamSongBtn.style.display = 'none';
+    }
   }
+
+  /* tap the water: a ripple spreads out from the tap point */
+  function spawnRipple(x, y){
+    if(!rippleLayer) return;
+    var r = document.createElement('span');
+    r.className = 'pond-ripple';
+    r.style.left = x + 'px';
+    r.style.top = y + 'px';
+    rippleLayer.appendChild(r);
+    setTimeout(function(){ r.remove(); }, 1300);
+  }
+  if(pondScene){
+    pondScene.addEventListener('click', function(e){
+      var r = pondScene.getBoundingClientRect();
+      spawnRipple(e.clientX - r.left, e.clientY - r.top);
+      playChime();
+    });
+  }
+
+  /* tap the moon: a bright halo pulse + a shooting star, nothing written */
+  if(dreamMoon){
+    dreamMoon.addEventListener('click', function(e){
+      e.stopPropagation();
+      if(dreamMoonHalo){
+        clearTimeout(moonBurstTimeout);
+        dreamMoonHalo.classList.remove('burst');
+        void dreamMoonHalo.offsetWidth;
+        dreamMoonHalo.classList.add('burst');
+        moonBurstTimeout = setTimeout(function(){ dreamMoonHalo.classList.remove('burst'); }, 950);
+      }
+      var r = page5Canvas.getBoundingClientRect();
+      var br = dreamMoon.getBoundingClientRect();
+      var cx = br.left + br.width/2 - r.left, cy = br.top + br.height/2 - r.top;
+      page5Field.sparkleBurst(cx, cy, 16, ['star']);
+      page5Field.shootingStar(cx - 46, cy - 8);
+      playChime();
+    });
+  }
+
+  /* tap the two of you: they lean in a little closer, hearts drift up */
+  if(dreamCouple){
+    dreamCouple.addEventListener('click', function(e){
+      e.stopPropagation();
+      coupleClose = !coupleClose;
+      dreamCouple.classList.toggle('close', coupleClose);
+      var r = page5Canvas.getBoundingClientRect();
+      var br = dreamCouple.getBoundingClientRect();
+      page5Field.sparkleBurst(br.left + br.width/2 - r.left, br.top - r.top, 10, ['heart']);
+      playChime();
+    });
+  }
+
+  /* your song: pauses the background music while it plays, resumes it after */
   function pauseBgMusicForSong(){
     if(window.Tone && Tone.Transport && Tone.Transport.state === 'started'){
-      try{ Tone.Transport.pause(); transportPausedForSong = true; }catch(e){}
+      Tone.Transport.pause();
+      bgMusicWasPlaying = true;
     }
   }
   function resumeBgMusicAfterSong(){
-    if(transportPausedForSong && window.Tone && Tone.Transport){
-      try{ Tone.Transport.start(); }catch(e){}
+    if(CONFIG.music && bgMusicWasPlaying && window.Tone && Tone.Transport && Tone.Transport.state !== 'started'){
+      Tone.Transport.start();
     }
-    transportPausedForSong = false;
+    bgMusicWasPlaying = false;
+  }
+  function setSongButtonState(playing){
+    songPlaying = playing;
+    if(!dreamSongBtn) return;
+    dreamSongBtn.classList.toggle('playing', playing);
+    dreamSongBtn.textContent = playing ? '⏸️' : '▶️';
+    dreamSongBtn.setAttribute('aria-label', playing ? 'Pause our song' : 'Play our song');
   }
   function playDreamSong(){
-    if(!dreamAudioEl || !songBtn) return;
-    if(!CONFIG.songSrc){ setSongHint('add your song file path in CONFIG.songSrc 🎵'); return; }
+    if(!CONFIG.songSrc || !dreamAudio) return;
     pauseBgMusicForSong();
-    var playPromise = dreamAudioEl.play();
-    if(playPromise && playPromise.catch){
-      playPromise.then(function(){
-        songPlaying = true;
-        songBtn.classList.add('playing');
-        if(songBarsEl) songBarsEl.classList.add('show');
-        setSongHint('');
-      }).catch(function(){
+    var p = dreamAudio.play();
+    if(p && p.catch){
+      p.then(function(){ setSongButtonState(true); }).catch(function(){
         resumeBgMusicAfterSong();
-        setSongHint('add your song file at ' + CONFIG.songSrc + ' to hear it here 🎵');
+        setSongButtonState(false);
       });
     } else {
-      songPlaying = true;
-      songBtn.classList.add('playing');
-      if(songBarsEl) songBarsEl.classList.add('show');
+      setSongButtonState(true);
     }
   }
   function stopDreamSong(){
-    if(!dreamAudioEl) return;
-    try{ dreamAudioEl.pause(); }catch(e){}
-    songPlaying = false;
-    if(songBtn) songBtn.classList.remove('playing');
-    if(songBarsEl) songBarsEl.classList.remove('show');
+    if(!dreamAudio) return;
+    dreamAudio.pause();
+    setSongButtonState(false);
     resumeBgMusicAfterSong();
   }
-  if(songBtn){
-    songBtn.addEventListener('click', function(){
+  if(dreamSongBtn){
+    dreamSongBtn.addEventListener('click', function(){
       if(songPlaying){ stopDreamSong(); } else { playDreamSong(); }
     });
   }
-  if(dreamAudioEl){
-    dreamAudioEl.addEventListener('error', function(){
-      setSongHint('add your song file at ' + (CONFIG.songSrc||'audio/your-song.mp3') + ' to hear it here 🎵');
-    });
-    dreamAudioEl.addEventListener('ended', function(){
-      songPlaying = false;
-      if(songBtn) songBtn.classList.remove('playing');
-      if(songBarsEl) songBarsEl.classList.remove('show');
-      resumeBgMusicAfterSong();
-    });
-  }
-
-  function spawnShootingStar(){
-    if(!dreamStageEl) return;
-    var el = document.createElement('span');
-    el.className = 'shooting-star';
-    el.style.top = rand(6,20) + '%';
-    el.style.left = rand(-6,8) + '%';
-    dreamStageEl.appendChild(el);
-    setTimeout(function(){ el.remove(); }, 1300);
-  }
-  if(moonBtn){
-    moonBtn.addEventListener('click', function(){
-      spawnShootingStar();
-      var canvasRect = page5Canvas.getBoundingClientRect();
-      var br = moonBtn.getBoundingClientRect();
-      page5Field.sparkleBurst(br.left + br.width/2 - canvasRect.left, br.top + br.height/2 - canvasRect.top, 16, ['star','heart']);
-      playChime();
-    });
-  }
-  if(pondWaterBtn){
-    pondWaterBtn.addEventListener('click', function(e){
-      var canvasRect = page5Canvas.getBoundingClientRect();
-      var x, y;
-      if(e.clientX || e.clientY){
-        x = e.clientX - canvasRect.left;
-        y = e.clientY - canvasRect.top;
-      } else {
-        var br = pondWaterBtn.getBoundingClientRect();
-        x = br.left + br.width/2 - canvasRect.left;
-        y = br.top + br.height/2 - canvasRect.top;
-      }
-      page5Field.ripple(x, y, 64, 'rgba(255,248,228,.55)');
-      page5Field.ripple(x, y, 40, 'rgba(255,248,228,.4)');
-      playChime();
-    });
-  }
-  if(coupleBtn){
-    coupleBtn.addEventListener('click', function(e){
-      e.stopPropagation();
-      coupleBtn.classList.remove('leaning');
-      void coupleBtn.offsetWidth;
-      coupleBtn.classList.add('leaning');
-      var canvasRect = page5Canvas.getBoundingClientRect();
-      var br = coupleBtn.getBoundingClientRect();
-      page5Field.sparkleBurst(br.left + br.width/2 - canvasRect.left, br.top - canvasRect.top, 14, ['heart']);
-      playChime();
-      setTimeout(function(){ coupleBtn.classList.remove('leaning'); }, 900);
-    });
-  }
-  function buildDreamPage(){
-    var capEl = document.getElementById('dreamCaption');
-    if(capEl) capEl.textContent = CONFIG.dreamCaption;
-    if(dreamAudioEl && CONFIG.songSrc){ dreamAudioEl.src = CONFIG.songSrc; }
+  if(dreamAudio){
+    dreamAudio.addEventListener('ended', function(){ setSongButtonState(false); resumeBgMusicAfterSong(); });
   }
 
   /* ---- page 2: balloon pop ---- */
@@ -1766,15 +1770,11 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     } else { page3Field.stop(); }
     if(idx===3){ decorField.start(); } else { decorField.stop(); }
     if(idx===4){
-      if(!page5Seeded && !REDUCED_MOTION){
-        page5Field.seedAmbient(['star'], 5, [0.02, 0.32]);
-        page5Field.addAmbient(['firefly'], 6, [0.42, 0.9]);
-        page5Seeded = true;
-      }
+      if(!page5Seeded && !REDUCED_MOTION){ page5Field.seedAmbient(['star','firefly'], 5); page5Seeded = true; }
       page5Field.start();
     } else {
       page5Field.stop();
-      stopDreamSong();
+      if(songPlaying) stopDreamSong();
     }
     if(idx===5){
       if(!page6Seeded && !REDUCED_MOTION){ page6Field.seedAmbient(['star'], 8); page6Seeded = true; }
@@ -1834,6 +1834,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     muted = !muted;
     this.textContent = muted ? '🔇' : '🔊';
     if(window.Tone){ try{ Tone.Destination.mute = muted; }catch(e){} }
+    if(dreamAudio){ dreamAudio.muted = muted; }
   });
   if(!CONFIG.music){ document.getElementById('muteBtn').style.display = 'none'; }
 
