@@ -239,6 +239,12 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
 .dream-stage{ position:relative; width:100%; flex:1; min-height:0; }
 .page5-canvas{ position:absolute; inset:0; z-index:3; pointer-events:none; }
 
+.dream-horizon-glow{
+  position:absolute; left:0; right:0; bottom:40%; height:12%; z-index:1; pointer-events:none;
+  background:linear-gradient(to bottom, rgba(255,200,180,0) 0%, rgba(255,196,175,.16) 55%, rgba(255,196,175,0) 100%);
+  filter:blur(2px);
+}
+
 .dream-hills{ position:absolute; left:0; right:0; bottom:37%; height:17%; z-index:1; pointer-events:none; filter:blur(.4px); opacity:0; }
 .hill-far{ opacity:.65; }
 .hill-near{ opacity:.92; }
@@ -679,6 +685,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
           <path class="hill-far" d="M0,90 C80,55 160,72 240,52 C340,26 420,62 520,42 C620,22 700,56 800,36 L800,140 L0,140 Z" fill="#5a3f68"/>
           <path class="hill-near" d="M0,118 C100,86 200,102 320,80 C440,58 540,96 650,76 C720,63 760,80 800,72 L800,140 L0,140 Z" fill="#2d2038"/>
         </svg>
+        <div class="dream-horizon-glow" aria-hidden="true"></div>
 
         <div class="pond-scene" id="pondScene" aria-hidden="true">
           <svg class="pond-water" viewBox="0 0 800 220" preserveAspectRatio="none" aria-hidden="true">
@@ -1844,7 +1851,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
     } else { page3Field.stop(); }
     if(idx===3){ decorField.start(); } else { decorField.stop(); }
     if(idx===4){
-      if(!page5Seeded && !REDUCED_MOTION){ page5Field.seedAmbient(['star','firefly'], 5); page5Seeded = true; }
+      if(!page5Seeded && !REDUCED_MOTION){ page5Field.seedAmbient(['star'], 9); page5Field.addAmbient(['firefly'], 5); page5Seeded = true; }
       page5Field.start();
     } else {
       page5Field.stop();
