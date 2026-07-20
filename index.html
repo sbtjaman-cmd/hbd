@@ -236,7 +236,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
 }
 .page5.active .dream-hint{ animation:popIn .55s cubic-bezier(.34,1.56,.64,1) .24s forwards, floatBob 3.4s ease-in-out .8s infinite; }
 
-.dream-stage{ position:relative; width:100%; flex:1; min-height:0; }
+.dream-stage{ position:relative; width:100%; flex:1; min-height:0; overflow:hidden; }
 .page5-canvas{ position:absolute; inset:0; z-index:3; pointer-events:none; }
 
 .dream-horizon-glow{
@@ -245,12 +245,14 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
   filter:blur(2px);
 }
 
-.dream-hills{ position:absolute; left:0; right:0; bottom:37%; height:17%; z-index:1; pointer-events:none; filter:blur(.4px); opacity:0; }
-.hill-far{ opacity:.65; }
-.hill-near{ opacity:.92; }
+.dream-hills{ position:absolute; left:0; right:0; bottom:37%; height:19%; z-index:1; pointer-events:none; opacity:0; overflow:hidden; }
+.hill-far{ opacity:.85; }
+.hill-near{ opacity:1; }
+.hill-far-ridge{ opacity:.55; }
+.hill-near-ridge{ opacity:.8; }
 .page5.active .dream-hills{ animation:sceneRise .9s ease-out .1s forwards; }
 
-.dream-moon{ position:absolute; z-index:2; top:5%; left:50%; transform:translateX(-50%) translateY(-14px); opacity:0; width:22%; max-width:88px; border:none; background:none; padding:0; cursor:pointer; }
+.dream-moon{ position:absolute; z-index:2; top:5%; left:50%; transform:translateX(-50%) translateY(-14px); opacity:0; width:22%; max-width:88px; aspect-ratio:1/1; border:none; background:none; padding:0; cursor:pointer; }
 .page5.active .dream-moon{ animation:moonDescend 1s cubic-bezier(.22,1,.36,1) .25s forwards; }
 .dream-moon-svg{ position:relative; z-index:1; width:100%; height:auto; display:block; filter:drop-shadow(0 4px 16px rgba(255,244,200,.55)); }
 .dream-moon-halo{
@@ -263,6 +265,10 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
 .pond-scene{ position:absolute; z-index:1; left:0; right:0; bottom:0; height:42%; overflow:hidden; border-radius:0 0 18px 18px; opacity:0; }
 .page5.active .pond-scene{ animation:fadeInUp .9s ease .35s forwards; }
 .pond-water{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+.mountain-reflection{ opacity:.28; }
+.water-ripple-line{ animation:rippleDrift 9s ease-in-out infinite; }
+.water-ripple-2{ animation-duration:12s; animation-delay:-3s; }
+.water-ripple-3{ animation-duration:15s; animation-delay:-6s; }
 .moon-reflection{
   position:absolute; left:50%; top:6%; width:26%; height:64%; transform:translate(-50%,0);
   background:radial-gradient(ellipse at center, rgba(255,248,220,.55) 0%, rgba(255,248,220,.16) 55%, rgba(255,248,220,0) 80%);
@@ -290,7 +296,6 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
 .dream-couple-frame{
   position:absolute; z-index:2; left:50%; bottom:5%; width:64%; max-width:250px; aspect-ratio:1487/675;
   opacity:0; transform:translateX(-50%) translateY(12px);
-  -webkit-box-reflect: below 2px linear-gradient(to bottom, transparent 0%, transparent 12%, rgba(18,14,32,.24) 38%, transparent 68%);
 }
 .page5.active .dream-couple-frame{ animation:coupleRise .85s cubic-bezier(.22,1,.36,1) .6s forwards; }
 .dream-couple-shadow{
@@ -559,6 +564,7 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
 @keyframes reedSwayRight{ 0%,100%{ transform:scaleX(-1) rotate(0deg); } 50%{ transform:scaleX(-1) rotate(-1.6deg); } }
 @keyframes lilyDrift{ 0%,100%{ transform:translateY(0) rotate(0deg); } 50%{ transform:translateY(-3px) rotate(3deg); } }
 @keyframes shimmerBand{ 0%,100%{ opacity:.25; transform:translateX(-50%) scaleX(.82); } 50%{ opacity:.65; transform:translateX(-50%) scaleX(1.08); } }
+@keyframes rippleDrift{ 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(14px); } }
 @keyframes songPulseRing{ 0%{ transform:scale(.85); opacity:.9; } 100%{ transform:scale(1.4); opacity:0; } }
 @keyframes cloudDrift{ 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(26px); } }
 @keyframes coupleGlowPulse{ 0%{ transform:scale(.7); opacity:0; } 40%{ opacity:1; } 100%{ transform:scale(1.35); opacity:0; } }
@@ -682,8 +688,10 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
         </button>
 
         <svg class="dream-hills" viewBox="0 0 800 140" preserveAspectRatio="none" aria-hidden="true">
-          <path class="hill-far" d="M0,90 C80,55 160,72 240,52 C340,26 420,62 520,42 C620,22 700,56 800,36 L800,140 L0,140 Z" fill="#5a3f68"/>
-          <path class="hill-near" d="M0,118 C100,86 200,102 320,80 C440,58 540,96 650,76 C720,63 760,80 800,72 L800,140 L0,140 Z" fill="#2d2038"/>
+          <path class="hill-far" d="M0,75 L70,40 L130,58 L200,25 L270,52 L350,15 L420,45 L500,28 L570,55 L650,20 L720,48 L800,35 L800,140 L0,140 Z" fill="#140d1f"/>
+          <path class="hill-far-ridge" d="M0,75 L70,40 L130,58 L200,25 L270,52 L350,15 L420,45 L500,28 L570,55 L650,20 L720,48 L800,35" fill="none" stroke="#fff2d6" stroke-width="4.5" stroke-linejoin="round"/>
+          <path class="hill-near" d="M0,100 L90,55 L170,78 L260,35 L350,68 L440,42 L530,72 L620,48 L710,70 L800,58 L800,140 L0,140 Z" fill="#0a0611"/>
+          <path class="hill-near-ridge" d="M0,100 L90,55 L170,78 L260,35 L350,68 L440,42 L530,72 L620,48 L710,70 L800,58" fill="none" stroke="#fff2d6" stroke-width="4.5" stroke-linejoin="round"/>
         </svg>
         <div class="dream-horizon-glow" aria-hidden="true"></div>
 
@@ -695,7 +703,11 @@ button:focus-visible{ outline:3px solid var(--pink-600); outline-offset:2px; }
                 <stop offset="100%" stop-color="rgba(16,14,36,.78)"/>
               </linearGradient>
             </defs>
+            <path class="mountain-reflection" d="M0,8 L70,24 L130,13 L200,29 L270,11 L350,31 L420,15 L500,25 L570,9 L650,27 L720,14 L800,19 L800,0 L0,0 Z" fill="#0a0611"/>
             <path d="M0,46 Q50,24 100,46 T200,46 T300,46 T400,46 T500,46 T600,46 T700,46 T800,46 L800,220 L0,220 Z" fill="url(#pondGrad)"/>
+            <path class="water-ripple-line water-ripple-1" d="M0,95 Q100,89 200,95 T400,95 T600,95 T800,95" stroke="rgba(255,255,255,.08)" stroke-width="1.8" fill="none"/>
+            <path class="water-ripple-line water-ripple-2" d="M0,145 Q120,138 240,145 T480,145 T720,145 T800,144" stroke="rgba(255,255,255,.06)" stroke-width="1.8" fill="none"/>
+            <path class="water-ripple-line water-ripple-3" d="M0,185 Q150,179 300,185 T600,185 T800,184" stroke="rgba(255,255,255,.045)" stroke-width="1.8" fill="none"/>
           </svg>
           <div class="moon-reflection" aria-hidden="true"></div>
           <svg class="reeds reeds-left" viewBox="0 0 120 140" aria-hidden="true">
